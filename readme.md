@@ -3,6 +3,7 @@
 
 `⛔️ only for Windows ⛔️`
 
+⚠️ code provided will only work for Kinesis Advantage 2 with the  bottom row `\` remapped to `F8`, the repo is mainly about layout design.
 
 Combined language keyboard layout using [autohotkey](https://www.autohotkey.com) and [dual.ahk](https://github.com/lydell/dual/) targeting english, french and russian symbols.
 
