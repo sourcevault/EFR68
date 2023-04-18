@@ -782,13 +782,13 @@ A.cap := "A"
 
 A.LShift := 2
 
-A.single_quote.cap := "{U+00C0}" ; À
+A.single_quote.cap := "{U+00C1}" ; Á
 
-A.single_quote.small := "{U+00E0}" ; à
+A.single_quote.small := "{U+00E1}" ; á
 
-A.grave.cap := "{U+00C1}" ; Á
+A.grave.cap := "{U+00C0}" ; À
 
-A.grave.small := "{U+00E1}" ; á
+A.grave.small := "{U+00E0}" ; à
 
 A.hat.cap := "{U+00C2}" ; Â
 

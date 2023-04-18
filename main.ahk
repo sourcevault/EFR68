@@ -86,7 +86,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *g::
   *g UP::
-    dual.combine("RAlt",".",{delay:70,doublePress:70,timeout:400},{Shift:["{Shift UP}","{U+042B}"]}) ; Ы
+    dual.combine("Alt",".",{delay:70,doublePress:70,timeout:400},{Shift:["{Shift UP}","{U+042B}"]}) ; Ы
     return
 
   *LShift::ru_remap3("\","{U+0449}","{U+0429}") ; щ  ; Щ
@@ -156,7 +156,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *Enter::
   *Enter UP::
-    dual.combine("RAlt","e",{delay: 70,doublePress: 70},{F21:""})
+    dual.combine("Alt","e",{delay: 70,doublePress: 70},{F21:""})
     ru_e()
     return
 
@@ -256,9 +256,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *s UP::dual.combine("Shift","t")
 
   *d::
-  *d UP::
-    dual.combine("LAlt","i",{delay: 70,doublePress:70,timeout:200})
-    return
+  *d UP::dual.combine("LAlt","i")
 
   *f::dual.comboKey("o")
 
@@ -580,7 +578,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *Enter::
   *Enter UP::
 
-    dual.combine("RAlt","e",{doublePress:250,timeout:200,delay:20},{F21:""})
+    dual.combine("Alt","e",{doublePress:250,timeout:200,delay:20},{F21:""})
 
     accent_letter_with_mod(Loc.E)
 

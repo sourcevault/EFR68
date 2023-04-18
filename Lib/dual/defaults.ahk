@@ -6,8 +6,6 @@
 *f::
 *g::
 *h::
-*i::
-*j::
 *k::
 *l::
 *m::
@@ -73,8 +71,10 @@
 	dual.comboKey()
 	return
 
-*s::
-*s UP::
+*i::
+*i UP::
+*j::
+*j UP::
 *F8::
 *F8 UP::
 *F20::
