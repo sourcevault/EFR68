@@ -27,7 +27,7 @@ ru_symbol_and_letter(sym,small,cap)
   }
   else if (C || A)
   {
-    SendInput {Blind}{%sym%}
+    SendInput {Blind}%sym%
   }
   else if (CL)
   {
@@ -69,7 +69,7 @@ ru_number_symbol(num,symbol1,symbol2)
   }
   else if (C || A)
   {
-    SendInput {Blind}{%num%}
+    SendInput {Blind}%num%
   }
   else if (CL)
   {
@@ -108,10 +108,6 @@ ru_remap_internal(en,small,cap,data)
 
   data.CapsLock := cap
 
-  data.Alt := en
-
-  data.Ctrl := en
-
   data.LAlt := en
 
   data.LCtrl := en
@@ -134,12 +130,13 @@ ru_remap3_20fsilent(en,small,cap)
   ru_remap_internal(en,small,cap,data)
 }
 
-
 ru_remap3(en,small,cap)
-{ 
+{
+
   data := {}
 
   ru_remap_internal(en,small,cap,data)
+
 }
 
 
@@ -186,7 +183,7 @@ ru_remap4(en,small,cap,num)
 
   if (LC || LA || RC || RA)
   {
-    SendInput {Blind}{%en%}
+    SendInput {Blind}%en%
   }
   else if (CL)
   {
@@ -229,7 +226,7 @@ ru_number(num,symbol)
 
   if (C || A)
   {
-    SendInput {Blind}{%num%}
+    SendInput {Blind}%num%
   }
   else if (CL)
   {
@@ -399,9 +396,9 @@ accent_letter(data)
   if (data.LShift)
   {
 
-    LSh := GetKeyState("LShift")
+    LS := GetKeyState("LShift")
 
-    if (LSh)
+    if (LS)
     {
       dual.SendInput(data.LShift)
       return
@@ -485,7 +482,10 @@ accent_letter(data)
       }
       else
       {
-        dual.SendInput(data.small)
+
+        ds := data.small
+
+        SendInput {Blind}%ds%
       }
     }
   }

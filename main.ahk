@@ -6,8 +6,6 @@ SendLevel 2
 
 SendMode Input
 
-global foo := 5
-
 #Include <dual/dual>
 
 dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: false})
@@ -20,8 +18,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
 *F12::dual.reset()
 
-;------------------------
-
+;-------------RUSSIAN---------------
 
 #if (Toggle=1) ; RU
 {
@@ -141,7 +138,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *LAlt::dual.comboKey("Delete")
 
   *Home::
-  *Home UP::dual.combine("Alt","PgUp",{doublePress:250})
+  *Home UP::dual.combine("LAlt","PgUp",{doublePress:250})
 
   *End::dual.comboKey("PgDn")
 
@@ -159,7 +156,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *Enter::
   *Enter UP::
-    dual.combine("Alt","e",false,{F21:""})
+    dual.combine("RAlt","e",{delay: 70,doublePress: 70},{F21:""})
     ru_e()
     return
 
@@ -216,6 +213,8 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
 }
 
+;-------- old keyboard ------------
+
 #if (Toggle=0) ; old keyboard
 {
 
@@ -257,7 +256,9 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *s UP::dual.combine("Shift","t")
 
   *d::
-  *d UP::dual.combine("LAlt","i",{delay: 70,doublePress:70})
+  *d UP::
+    dual.combine("LAlt","i",{delay: 70,doublePress:70,timeout:200})
+    return
 
   *f::dual.comboKey("o")
 
@@ -368,6 +369,8 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *l UP::dual.combine("LAlt","e")
 
 }
+
+;------------------French -------------------- 
 
 #if (Toggle=2) ; French Keyboard
 {
@@ -577,7 +580,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *Enter::
   *Enter UP::
 
-    dual.combine("RAlt","e",false,{F21:""})
+    dual.combine("RAlt","e",{doublePress:250,timeout:200,delay:20},{F21:""})
 
     accent_letter_with_mod(Loc.E)
 
