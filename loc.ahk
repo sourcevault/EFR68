@@ -65,7 +65,9 @@ ru_number_symbol(num,symbol1,symbol2)
 
   if (LS && RS)
   {
-    dual.SendInput(symbol2)
+    ; SendInput(symbol2)
+    SendInput {Blind}%symbol2%
+
   }
   else if (C || A)
   {
@@ -463,7 +465,7 @@ accent_letter(data)
   }
   else
   { 
-    if(L)
+    if(L) ; capslock is on
     {
       if(RS)
       {
@@ -482,9 +484,7 @@ accent_letter(data)
       }
       else
       {
-
         ds := data.small
-
         SendInput {Blind}%ds%
       }
     }
@@ -518,9 +518,10 @@ my_combine(data)
 ru_H()
 {
 
-  combinator := {}
 
   letter := "{U+0445}" ; х {U+0445}
+
+  combinator := {}
 
   combinator.LShift := ["{Shift UP}",0]
 
@@ -540,10 +541,129 @@ ru_H()
 
   setting.timeout := 100
 
-  dual.combine("LAlt",letter,setting,combinator)
+  dual.combine("RAlt",letter,setting,combinator)
 
 }
 
+ru_N()
+{
+
+  combinator := {}
+
+  letter := "{U+043D}" ; н {U+043D}
+
+  combinator.LShift := ["{Shift UP}",1]
+
+  combinator.RShift := "{U+041D}" ; Н {U+041D}
+
+  combinator.CapsLock := "{U+041D}" ; Н {U+041D}
+
+  combinator.Alt := "n"
+
+  combinator.Ctrl := "n"
+
+  combinator.CapsLockShift := "{U+043D}" ; н {U+043D}
+  
+  setting := {}
+
+  setting.doublePress := 70
+
+  setting.timeout := 100
+
+  dual.combine("F20",letter,setting,combinator)
+
+}
+
+ru_A()
+{
+
+  combinator := {}
+
+  letter := "{U+0430}" ; а {U+0430}
+
+  combinator.LShift := ["{Shift UP}",2]
+
+  combinator.RShift := "{U+0410}" ; А {U+0410}
+
+  combinator.CapsLock := "{U+0410}" ; А {U+0410}
+
+  combinator.Alt := "a"
+
+  combinator.Ctrl := "a"
+
+  combinator.CapsLockShift := "{U+0430}" ; а {U+0430}
+  
+  setting := {}
+
+  setting.doublePress := 70
+
+  setting.timeout := 100
+
+  dual.combine("Ctrl",letter,setting,combinator)
+
+}
+
+ru_O()
+{
+  combinator := {}
+
+  letter := "{U+043E}" ; о {U+043E}
+
+  combinator.LShift := ["{Shift UP}",3]
+
+  combinator.RShift := "{U+041E}" ; О {U+041E}
+
+  combinator.CapsLock := "{U+041E}" ; О {U+041E}
+
+  combinator.Alt := "o"
+
+  combinator.Ctrl := "o"
+
+  combinator.CapsLockShift := "{U+043E}" ; о {U+043E}
+  
+  setting := {}
+
+  setting.doublePress := 70
+
+  setting.timeout := 100
+
+  dual.combine("LAlt",letter,setting,combinator)
+}
+
+fr_h()
+{
+  letter := "h"
+
+  combinator := {}
+
+  combinator.LShift := ["{Shift Up}",0]
+
+  combinator.CapsLockShift := "h"
+
+  setting := {}
+
+  setting.doublePress := 70
+
+  dual.combine("RAlt",letter,setting,combinator)
+
+}
+
+fr_j()
+{
+  letter := "n"
+
+  combinator := {}
+
+  combinator.LShift := ["{Shift Up}",1]
+
+  combinator.CapsLockShift := "n"
+
+  setting := {}
+
+  setting.doublePress := 70
+
+  dual.combine("F20",letter,setting,combinator)
+}
 combine_accent(symbol,num)
 {
   dual.combine("F21",symbol)
@@ -582,7 +702,61 @@ hat_accent()
 
 ; ---------------------------
 
-; "{U+0447}","{U+0427}") ; ч ; Ч
+RU_T := {}
+
+RU_T.mod := "LAlt"
+
+RU_T.letter := "{U+0442}" ; т {U+0442}
+
+RU_T.setting := false
+
+combinator := {}
+
+combinator.Shift := "{U+0422}" ; Т {U+0422}
+
+combinator.CapsLock := "{U+0422}" ; Т {U+0422}
+
+combinator.LAlt := "t"
+
+combinator.RAlt := "t"
+
+combinator.Ctrl := "t"
+
+combinator.CapsLockShift := "{U+0442}" ; т {U+0442}
+
+RU_T.combinator := combinator
+
+Loc.RU_T := RU_T
+
+; ---------------------------
+
+RU_I := {}
+
+RU_I.mod := "Ctrl"
+
+RU_I.letter := "{U+0438}" ; и {U+0438}
+
+RU_I.setting := false
+
+combinator := {}
+
+combinator.Shift := "{U+0418}" ; И {U+0418}
+
+combinator.CapsLock := "{U+0418}" ; И {U+0418}
+
+combinator.LAlt := "i"
+
+combinator.RAlt := "i"
+
+combinator.Ctrl := "i"
+
+combinator.CapsLockShift := "{U+0438}" ; {U+0438}
+
+RU_I.combinator := combinator
+
+Loc.RU_I := RU_I
+
+; ---------------------------
 
 RU_C := {}
 
@@ -600,17 +774,43 @@ combinator.CapsLock := "{U+0427}" ; Ч U+0427
 
 combinator.LAlt := "c"
 
-combinator.LCtrl := "c"
-
 combinator.RAlt := "c"
 
-combinator.RCtrl := "c"
+combinator.Ctrl := "c"
 
 combinator.CapsLockShift := "{U+0447}" ; ч U+0447
 
 RU_C.combinator := combinator
 
 Loc.RU_C := RU_C
+
+; ---------------------------
+
+RU_dot := {}
+
+RU_dot.mod := "RAlt"
+
+RU_dot.letter := "." 
+
+RU_dot.setting := {delay:70,doublePress:70,timeout:400}
+
+combinator := {}
+
+combinator.Shift := "{U+0427}" ; Ы ; {U+042B}
+
+combinator.CapsLock := "."
+
+combinator.LAlt := "."
+
+combinator.RAlt := "."
+
+combinator.Ctrl := "."
+
+combinator.CapsLockShift := "."
+
+RU_dot.combinator := combinator
+
+Loc.RU_dot := RU_dot
 
 ; ---------------------------
 

@@ -3,9 +3,11 @@
 
 `⛔️ only for Windows ⛔️`
 
-⚠️ code provided will only work for Kinesis Advantage 2 with the  bottom row `\` remapped to `F8`, the repo is mainly about layout design.
+⚠️ code provided will only work for Kinesis Advantage 2 ( or keyboard with similar layout ) with the  bottom row `\` remapped to `F8`, the repo is kept mainly to show the layout design.
 
 Combined language keyboard layout using [autohotkey](https://www.autohotkey.com) and [dual.ahk](https://github.com/lydell/dual/) targeting english, french and russian symbols.
+
+Make sure to have your default english keyboard to English (United States) US.
 
 #### Features
 
@@ -17,11 +19,11 @@ Combined language keyboard layout using [autohotkey](https://www.autohotkey.com)
 
 - Cut, Copy, Paste, Undo all in friendly location.
 
-- `Ctrl+minus` and `Ctrl+plus` on the left side to make it easy to zoom and zoom out 
+- `Ctrl+minus` and `Ctrl+plus` on the left side to make it easy to zoom and zoom out.
 
-- Optimized for use with Abode product.
+- Optimized for use with Abode product, and navigating panes while using mouse.
 
-![](./keys_version_23_with_shortcuts.png)
+![](./layout.png)
 
 
 #### LICENCE

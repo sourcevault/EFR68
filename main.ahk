@@ -1,10 +1,10 @@
-#InputLevel 2
 SendLevel 2
+#InputLevel 2
 
 #NoEnv
 #SingleInstance force
 
-SendMode Input
+; SendMode Input
 
 #Include <dual/dual>
 
@@ -22,7 +22,6 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
 #if (Toggle=1) ; RU
 {
-
 
   ; RIGHT THUMB CLUSTER
 
@@ -75,9 +74,15 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *a::ru_remap3("s","{U+0441}","{U+0421}") ; с ; С
 
-  *s::ru_remap3("t","{U+0442}","{U+0422}") ; т ; Т
+  *s::
+  *s UP::
+    my_combine(Loc.RU_T)
+    return
 
-  *d::ru_remap3("i","{U+0438}","{U+0418}") ; и ; И
+  *d::
+  *d UP::
+    my_combine(Loc.RU_I)
+    return
 
   *f::
   *f UP::
@@ -86,12 +91,14 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *g::
   *g UP::
-    dual.combine("Alt",".",{delay:70,doublePress:70,timeout:400},{Shift:["{Shift UP}","{U+042B}"]}) ; Ы
+    my_combine(Loc.RU_dot)
     return
 
-  *LShift::ru_remap3("\","{U+0449}","{U+0429}") ; щ  ; Щ
+  *LShift::ru_symbol_and_letter("\","{U+0449}","{U+0429}") ; щ  ; Щ
 
-  *z::ru_remap3("g","{U+0433}","{U+0413}") ; г ; Г
+  *z::ru_symbol_and_letter("\","{U+0449}","{U+0429}") ; щ  ; Щ
+
+  ; *z::ru_remap3("g","{U+0433}","{U+0413}") ; г ; Г
 
   *x::ru_remap3("m","{U+043C}","{U+041C}") ; м ; М
 
@@ -137,8 +144,8 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *LAlt::dual.comboKey("Delete")
 
-  *Home::
-  *Home UP::dual.combine("LAlt","PgUp",{doublePress:250})
+  *Home::dual.comboKey("PgUp",{doublePress:250})
+
 
   *End::dual.comboKey("PgDn")
 
@@ -156,7 +163,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *Enter::
   *Enter UP::
-    dual.combine("Alt","e",{delay: 70,doublePress: 70},{F21:""})
+    dual.combine("LAlt","e",{delay: 70,doublePress: 70},{F21:""})
     ru_e()
     return
 
@@ -182,11 +189,15 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *h::
   *h UP::ru_H()
   
-  *j::ru_remap4("n","{U+043D}","{U+041D}","1") ; н {U+043D} ; Н {U+041D}
+  *j::
+  *j UP::ru_N()
 
-  *k::ru_remap4("a","{U+0430}","{U+0410}","2") ; а {U+0430} ; А {U+0410}
+  *k::
+  *k UP::ru_A()
 
-  *l::ru_remap4("o","{U+043E}","{U+041E}","3") ; о {U+043E} ; О {U+041E}
+  *l::
+  *l UP::ru_O()
+
   *;::ru_remap4("r","{U+0440}","{U+0420}","4") ; р {U+0440} ; Р {U+0420}
 
   *'::ru_remap4("p","{U+043F}","{U+041F}","5") ; п {U+043F} ; П {U+041F}
@@ -213,7 +224,241 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
 }
 
-;-------- old keyboard ------------
+;------------------French -------------------- 
+
+#if (Toggle=2) ; French Keyboard
+{
+
+  ; *F10::
+  ; *` UP::single_qoute_accent()
+
+  *=::
+  *= UP::grave_accent()
+
+  *1::ru_number("0","|")
+
+  *2::ru_number("1","(")
+
+  *3::ru_number("2",")")
+
+  *4::ru_number("3","{U+007B}") ; {
+
+  *5::ru_number("4","{U+007D}") ; }
+
+  *6::ru_number("5","<")
+
+  *7::ru_number("6",">")
+
+  *8::ru_number("7","[")
+
+  *9::ru_number_symbol("8","]","~")
+
+  *0::ru_number("9","{!}")
+
+  *-::dual.comboKey("CapsLock")
+
+  ; ; ----------
+
+  *Tab::constant("_","$")
+
+  *q::dual.comboKey("z")
+
+  *w::dual.comboKey("up")
+
+  *e::dual.comboKey("down")
+
+  *r::dual.comboKey("v")
+
+  *t::
+    dual.comboKey("x",{F20:""})
+    switch_language_on_F20()
+    return
+
+  ; ;-------------------------
+
+  *CapsLock::dual.comboKey("b")
+
+  *a::dual.comboKey("s")
+
+  *s::
+  *s UP::dual.combine("LAlt","t",{doublePress:70})
+
+  *d::
+  *d UP::
+    dual.combine("LCtrl","",{doublePress:70},{F21:""})
+    accent_letter_with_mod(Loc.I)
+    return
+
+  *f::
+  *f UP::
+    dual.combine("RShift","",{doublePress:70},{F21:""})
+    accent_letter_with_mod(Loc.C)
+    return
+
+  *g::
+  *g UP::
+    dual.combine("RAlt",".")
+    return
+
+  ; ;-------------------------
+
+  *LShift::dual.comboKey("\")
+
+  *z::dual.comboKey("g")
+
+  *x::dual.comboKey("m")
+
+  *c::dual.comboKey("l")
+
+  *v::dual.comboKey("d")
+
+  *b::dual.comboKey("k")
+
+  ; ;-------------------------
+
+  *`::
+  *` UP::single_qoute_accent()
+
+  *F8::
+  *F8 UP::double_qoute_accent()
+
+  *left::dual.comboKey("-",{Shift:"@"})
+
+  *right::dual.comboKey("+",{Shift:"%"})
+
+  ; ;-------------------------
+
+  *y::dual.comboKey(",")
+
+  *u::dual.comboKey("home")
+
+  *i::dual.comboKey("left")
+
+  *o::dual.comboKey("right")
+
+  *p::dual.comboKey("end")
+
+  *\::dual.comboKey("q")
+
+  ; ;-------------------------
+
+  *h::
+  *h UP::fr_h()
+
+  *j::
+  *j UP::fr_j()
+
+
+  *k::
+  *k UP::
+    dual.combine("LCtrl","",{doublePress:70},{F21:""})
+    accent_letter_with_mod(Loc.A)
+    return
+
+  *l::
+  *l UP::
+    dual.combine("LAlt","",{doublePress:70},{F21:""})
+    accent_letter_with_mod(Loc.O)
+    return
+
+
+  *;::fr_remap2("r",4)
+
+  *'::fr_remap2("p",5)
+
+  ; ; -------------------------
+
+  *n::dual.comboKey("=")
+
+  *m::fr_remap2("w",6)
+
+
+  *,::
+    dual.combo("")
+    accent_letter(Loc.U)
+    return
+
+  *.::fr_remap2("y",8)
+
+  */::fr_remap2("f",9)
+
+  *RShift::dual.comboKey("j")
+
+  ; ;------------------------
+
+  *up::dual.comboKey(";",{Shift:"?"})
+
+  *down::dual.comboKey(":",{Shift:"*"})
+
+  *[::dual.comboKey("{#}",{Shift:"&"})
+
+  *]::
+  *] UP::hat_accent()
+
+  ; ;-------------------------
+
+  ; LEFT THUMB CLUSTER (COPIED)
+
+  *Backspace::
+  *Backspace UP::dual.combine("Ctrl","Backspace",{doublePress:250})
+
+  *LCtrl::
+  *LCtrl UP::
+
+    if (JustToggled)
+    {
+      JustToggled := false
+      SendInput {F20 up}
+    }
+    else
+    {
+      dual.combine("F20","Enter")
+    }
+
+    return
+
+  *Delete::
+  *Delete UP::dual.combine("LShift","Tab")
+
+  ; ;-------------------------
+
+  *LAlt::dual.comboKey("Delete")
+
+  *Home::
+  *Home UP::dual.combine("LAlt","PgUp",{doublePress:250})
+
+  *End::dual.comboKey("PgDn")
+
+  ; RIGHT THUMB CLUSTER
+
+  *RWin::switch_language_main()
+
+  *PgUp::
+  *PgUp UP::my_combine(Loc.EE)
+
+  *PgDn::dual.comboKey("/")
+
+  *RCtrl::
+  *RCtrl UP::dual.combine("Ctrl","{Esc}",{doublePress:250})
+
+  *Enter::
+  *Enter UP::
+
+    dual.combine("RAlt","e",{doublePress:250,timeout:200,delay:20},{F21:""})
+
+    accent_letter_with_mod(Loc.E)
+
+    return
+
+  *Space::
+  *Space UP::dual.combine("RShift","Space")
+
+  ; ------------------------------------ 
+
+}
+
+;---------------------------------------
+;-------- old keyboard -----------------
 
 #if (Toggle=0) ; old keyboard
 {
@@ -364,230 +609,6 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   ; ;--------------------------
 
   *l::
-  *l UP::dual.combine("LAlt","e")
+  *l UP::dual.combine("RAlt","e")
 
 }
-
-;------------------French -------------------- 
-
-#if (Toggle=2) ; French Keyboard
-{
-
-  *=::
-  *= UP::grave_accent()
-
-  *1::ru_number("0","|")
-
-  *2::ru_number("1","(")
-
-  *3::ru_number("2",")")
-
-  *4::ru_number("3","{U+007B}") ; {
-
-  *5::ru_number("4","{U+007D}") ; }
-
-  *6::ru_number("5","<")
-
-  *7::ru_number("6",">")
-
-  *8::ru_number("7","[")
-
-  *9::ru_number_symbol("8","]","~")
-
-  *0::ru_number("9","{!}")
-
-  *-::dual.comboKey("CapsLock")
-
-  ; ; ----------
-
-  *Tab::constant("_","$")
-
-  *q::dual.comboKey("z")
-
-  *w::dual.comboKey("up")
-
-  *e::dual.comboKey("down")
-
-  *r::dual.comboKey("v")
-
-  *t::
-    dual.comboKey("x",{F20:""})
-    switch_language_on_F20()
-    return
-
-  ; ;-------------------------
-
-  *CapsLock::dual.comboKey("b")
-
-  *a::dual.comboKey("s")
-
-  *s::dual.comboKey("t")
-
-  *d::
-    dual.combo("")
-    accent_letter(Loc.I)
-    return
-
-  *f::
-    dual.combo("")
-    accent_letter(Loc.C)
-    return
-
-  *g::
-  *g UP::
-    dual.combine("Alt",".")
-    return
-
-  ; ;-------------------------
-
-  *LShift::dual.comboKey("\")
-
-  *z::dual.comboKey("g")
-
-  *x::dual.comboKey("m")
-
-  *c::dual.comboKey("l")
-
-  *v::dual.comboKey("d")
-
-  *b::dual.comboKey("k")
-
-  ; ;-------------------------
-
-  *`::
-  *` UP::single_qoute_accent()
-
-  *F8::
-  *F8 UP::double_qoute_accent()
-
-  *left::dual.comboKey("-",{Shift:"@"})
-
-  *right::dual.comboKey("+",{Shift:"%"})
-
-  ; ;-------------------------
-
-  *y::dual.comboKey(",")
-
-  *u::dual.comboKey("home")
-
-  *i::dual.comboKey("left")
-
-  *o::dual.comboKey("right")
-
-  *p::dual.comboKey("end")
-
-  *\::dual.comboKey("q")
-
-  ; ;-------------------------
-
-  *h::
-  *h UP::dual.combine("LAlt","h",{doublePress:70},{LShift:["{Shift Up}",0]})
-
-  *j::fr_remap2("n",1)
-
-  *k::
-    dual.combo("")
-    accent_letter(Loc.A)
-    return
-
-  *l::
-    dual.combo("")
-    accent_letter(Loc.O)
-    return
-
-
-  *;::fr_remap2("r",4)
-
-  *'::fr_remap2("p",5)
-
-  ; ; -------------------------
-
-  *n::dual.comboKey("=")
-
-  *m::fr_remap2("w",6)
-
-
-  *,::
-    dual.combo("")
-    accent_letter(Loc.U)
-    return
-
-  *.::fr_remap2("y",8)
-
-  */::fr_remap2("f",9)
-
-  *RShift::dual.comboKey("j")
-
-  ; ;------------------------
-
-  *up::dual.comboKey(";",{Shift:"?"})
-
-  *down::dual.comboKey(":",{Shift:"*"})
-
-  *[::dual.comboKey("{#}",{Shift:"&"})
-
-  *]::
-  *] UP::hat_accent()
-
-  ; ;-------------------------
-
-  ; LEFT THUMB CLUSTER (COPIED)
-
-  *Backspace::
-  *Backspace UP::dual.combine("Ctrl","Backspace",{doublePress:250})
-
-  *LCtrl::
-  *LCtrl UP::
-
-    if (JustToggled)
-    {
-      JustToggled := false
-      SendInput {F20 up}
-    }
-    else
-    {
-      dual.combine("F20","Enter")
-    }
-
-    return
-
-  *Delete::
-  *Delete UP::dual.combine("LShift","Tab")
-
-  ; ;-------------------------
-
-  *LAlt::dual.comboKey("Delete")
-
-  *Home::
-  *Home UP::dual.combine("LAlt","PgUp",{doublePress:250})
-
-  *End::dual.comboKey("PgDn")
-
-  ; RIGHT THUMB CLUSTER
-
-  *RWin::switch_language_main()
-
-  *PgUp::
-  *PgUp UP::my_combine(Loc.EE)
-
-  *PgDn::dual.combo("/")
-
-  *RCtrl::
-  *RCtrl UP::dual.combine("Ctrl","{Esc}",{doublePress:250})
-
-  *Enter::
-  *Enter UP::
-
-    dual.combine("Alt","e",{doublePress:250,timeout:200,delay:20},{F21:""})
-
-    accent_letter_with_mod(Loc.E)
-
-    return
-
-  *Space::
-  *Space UP::dual.combine("RShift","Space")
-
-  ; ------------------------------------
-
-}
-
