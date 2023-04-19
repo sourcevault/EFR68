@@ -1,10 +1,10 @@
-SendLevel 2
-#InputLevel 2
+SendLevel 3
+#InputLevel 3
 
 #NoEnv
 #SingleInstance force
 
-; SendMode Input
+SendMode Input
 
 #Include <dual/dual>
 
@@ -96,9 +96,9 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *LShift::ru_symbol_and_letter("\","{U+0449}","{U+0429}") ; щ  ; Щ
 
-  *z::ru_symbol_and_letter("\","{U+0449}","{U+0429}") ; щ  ; Щ
+  ; *z::ru_symbol_and_letter("\","{U+0449}","{U+0429}") ; щ  ; Щ
 
-  ; *z::ru_remap3("g","{U+0433}","{U+0413}") ; г ; Г
+  *z::ru_remap3("g","{U+0433}","{U+0413}") ; г ; Г
 
   *x::ru_remap3("m","{U+043C}","{U+041C}") ; м ; М
 
@@ -268,6 +268,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *e::dual.comboKey("down")
 
   *r::dual.comboKey("v")
+
 
   *t::
     dual.comboKey("x",{F20:""})

@@ -23,11 +23,11 @@ ru_symbol_and_letter(sym,small,cap)
 
   if (LS && RS)
   {
-    dual.SendInput(cap)
+    SendInput {Blind}%cap%
   }
   else if (C || A)
   {
-    SendInput {Blind}%sym%
+    dual.SendInput(sym)
   }
   else if (CL)
   {
@@ -65,8 +65,8 @@ ru_number_symbol(num,symbol1,symbol2)
 
   if (LS && RS)
   {
-    ; SendInput(symbol2)
-    SendInput {Blind}%symbol2%
+
+    Dual.SendInput(symbol2)
 
   }
   else if (C || A)
