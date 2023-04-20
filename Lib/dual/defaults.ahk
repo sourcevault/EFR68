@@ -3,8 +3,10 @@
 *c::
 *d::
 *e::
-*f::
 *g::
+*f::
+*i::
+*j::
 *h::
 *k::
 *l::
@@ -51,7 +53,6 @@
 *PgUp::
 *Insert::
 *Backspace::
-*LShift::
 *Space::
 *Enter::
 *Tab::
@@ -62,25 +63,22 @@
 *F5::
 *F6::
 *F7::
+*F8::
 *F9::
-*F10::
 *F11::
 *F12::
+*F20::
+*F21::
 *CapsLock::
-*Shift::
 	dual.comboKey()
 	return
 
-*i::
-*i UP::
-*j::
-*j UP::
-*F8::
-*F8 UP::
-*F20::
-*F20 UP::
-*F21::
-*F21 UP::
+*F10::
+*F10 UP::
+*Shift::
+*Shift UP::
+*LShift::
+*LShift UP::
 *RShift::
 *RShift UP::
 *LCtrl::

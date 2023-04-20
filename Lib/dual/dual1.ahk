@@ -437,45 +437,32 @@ class Dual1 {
 
 	sendSubKeySet(key, combinators=false) {
 
-		contloop := true
+    contloop := true
 
-		dmp(combinators)
+    if (combinators.custom)
+    {
+      key := combinators.custom()
+      contloop := false
+    }
 
-		if (combinators.CapsLock && combinators.Shift && combinators.CapsLockShift)
-		{
+    if (contloop)
+    {
+      for combinator, resultingKey in combinators {
+          if (combinator = "CapsLock")
+          {
+            KS := GetKeyState("CapsLock","T")
+          }
+          else
+          {
+            KS := GetKeyState(combinator)
+          }
 
-			R := combinators.CapsLockShift
-
-			L := GetKeyState("CapsLock","T")
-
-			S := GetKeyState("Shift")
-
-			if (L && S)
-			{
-				key := combinators.CapsLockShift
-
-				contloop := false
-			}
-		}
-
-		if (contloop)
-		{
-			for combinator, resultingKey in combinators {
-					if (combinator = "CapsLock")
-					{
-						KS := GetKeyState("CapsLock","T")
-					}
-					else
-					{
-						KS := GetKeyState(combinator)
-					}
-
-					if (KS) {
-						key := resultingKey
-						break
-					}
-				}
-		}
+          if (KS) {
+            key := resultingKey
+            break
+          }
+        }
+    }
 
 		key := Dual1.subKeySet(key)
 

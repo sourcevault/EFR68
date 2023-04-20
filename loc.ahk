@@ -8,6 +8,7 @@ global Toggle := 0
 
 global JustToggled := false
 
+
 Menu, Tray, Icon, cono/old.png
 
 ru_symbol_and_letter(sym,small,cap)
@@ -112,9 +113,7 @@ ru_remap_internal(en,small,cap,data)
 
   data.LAlt := en
 
-  data.LCtrl := en
-
-  data.RCtrl := en
+  data.Ctrl := en
 
   data.RAlt := en
 
@@ -123,21 +122,239 @@ ru_remap_internal(en,small,cap,data)
   dual.comboKey(small,data)
 }
 
-ru_remap3_20fsilent(en,small,cap)
+switch_language_on_F20()
 {
-  data := {}
 
-  data.F20 := ""
+  fn20 := GetKeyState("F20")
 
-  ru_remap_internal(en,small,cap,data)
+  if (fn20)
+  {
+    switch_language_main()
+  }
+
 }
+
+ru_remap_through_custom(en,small,large)
+{
+  S    := GetKeyState("Shift")
+  Caps := GetKeyState("CapsLock","T")
+  C    := GetKeyState("Ctrl")
+  A    := GetKeyState("Alt")
+
+  if (C || A)
+  {
+    return en
+  }
+
+  if (Caps)
+  {
+    if(S)
+    {
+      return small
+    }
+    else
+    {
+      return large
+    }
+  }
+  else if(S)
+  {
+    return large
+  }
+  else
+  {
+    return small
+  }
+}
+
+ru_X()
+{
+
+  large := "{U+042E}" ;Ю
+  small := "{U+044E}" ;ю
+  en    := "x"
+
+  20F  := GetKeyState("F20")
+  if (20F)
+  {
+    switch_language_main()
+    return ""
+  }
+
+  key := ru_remap_through_custom(en,small,large)
+
+  return key
+}
+
+
+ru_T()
+{
+  large := "{U+0422}" ;Т
+  small := "{U+0442}" ;т
+  en    := "t"
+
+  key := ru_remap_through_custom(en,small,large)
+
+  return key
+}
+
+
+ru_I()
+{
+  large := "{U+0418}" ; И {U+0418}
+  small := "{U+0438}" ; и {U+0438}
+  en := "i"
+
+  key := ru_remap_through_custom(en,small,large)
+
+  return key
+}
+
+ru_C()
+{
+  large := "{U+0427}" ; Ч U+0427
+  small := "{U+0447}" ; ч U+0447
+  en := "c"
+
+  key := ru_remap_through_custom(en,small,large)
+
+  return key
+
+}
+
+
+ru_remap_through_custom_with_number(en,small,large,num)
+{
+
+  RS   := GetKeyState("RShift")
+  LS   := GetKeyState("LShift")
+  Caps := GetKeyState("CapsLock","T")
+  C    := GetKeyState("Ctrl")
+  A    := GetKeyState("Alt")
+
+  if (C || A)
+  {
+    return en
+  }
+
+  if (LS)
+  {
+    co := ["{Shift UP}",num]
+
+    return co
+  }
+
+  if (Caps)
+  {
+    if (RS)
+    {
+      return small
+    }
+    else
+    {
+      return large
+    }
+  }
+  else
+  {
+    if (RS)
+    {
+      return large
+    }
+    else
+    {
+      return small
+    }
+  }
+}
+ru_H()
+{
+
+  small := "{U+0445}" ; х {U+0445}
+  large := "{U+0425}" ; Х {U+0425}
+  en := "h"
+  num := 0
+
+  key := ru_remap_through_custom_with_number(en,small,large,num)
+
+  return key
+
+}
+
+; ---------------------------
+
+ru_NN()
+{
+
+  large := "{U+0419}" ; Й
+  small := "{U+0439}" ; й
+  en := "é"
+
+  key := ru_remap_through_custom(en,small,large)
+
+  return key
+
+}
+
+; ---------------------------
+
+ru_dot()
+{
+
+  on_shift := "{U+042B}" ; Ы
+  en := "."
+
+  S := GetKeyState("Shift")
+
+  if(S)
+  {
+    return on_shift
+  }
+  else
+  {
+    return en
+  }
+}
+
+; ---------------------------
 
 ru_remap3(en,small,cap)
 {
 
-  data := {}
+  dual.combo("")
 
-  ru_remap_internal(en,small,cap,data)
+  S := GetKeyState("Shift")
+  CL := GetKeyState("CapsLock","T")
+  C := GetKeyState("Ctrl")
+  A := GetKeyState("Alt")
+
+
+  if (C || A)
+  {
+    SendInput {Blind}%en%
+  }
+  else if (CL)
+  {
+    if (S)
+    {
+      dual.SendInput(small)
+    }
+    else
+    {
+      dual.SendInput(cap)
+    }
+  }
+  else
+  {
+    if (S)
+    {
+      dual.SendInput(cap)
+    }
+    else
+    {
+      dual.SendInput(small)
+    }
+  }
 
 }
 
@@ -262,7 +479,7 @@ switch_language_main()
 
   dual.reset()
 
-  Toggle:=Mod(Toggle+1,3)
+  Toggle:=Mod(Toggle+1,2)
 
   switch Toggle
   {
@@ -323,34 +540,6 @@ switch_language_on_F20_with_modifier()
   }
 
   return
-
-}
-
-switch_language_on_F20()
-{
-
-  fn20 := GetKeyState("F20")
-
-  if (fn20)
-  {
-    switch_language_main()
-  }
-
-}
-
-switch_language()
-{
-
-  currentKey := A_ThisHotkey
-
-  is_up := (SubStr(currentKey, -1) = "UP")
-
-  if (!is_up)
-  {
-    return
-  }
-
-  switch_language_on_F20()
 
 }
 
@@ -502,47 +691,16 @@ accent_letter_with_mod(data)
 
   if (!is_up)
   {
-    return 1
+    return
   }
 
   accent_letter(data)
-
 }
 
 
 my_combine(data)
-{ 
-  dual.combine(data.mod,data.letter,data.setting,data.combinator)
-}
-
-ru_H()
 {
-
-
-  letter := "{U+0445}" ; х {U+0445}
-
-  combinator := {}
-
-  combinator.LShift := ["{Shift UP}",0]
-
-  combinator.RShift := "{U+0425}" ; Х {U+0425}
-
-  combinator.CapsLock := "{U+0425}" ; Х {U+0425}
-
-  combinator.Alt := "h"
-
-  combinator.Ctrl := "h"
-
-  combinator.CapsLockShift := "{U+0445}" ; х {U+0445}
-  
-  setting := {}
-
-  setting.doublePress := 70
-
-  setting.timeout := 100
-
-  dual.combine("RAlt",letter,setting,combinator)
-
+  dual.combine(data.mod,data.letter,data.setting,data.combinator)
 }
 
 ru_N()
@@ -564,6 +722,8 @@ ru_N()
 
   combinator.CapsLockShift := "{U+043D}" ; н {U+043D}
   
+  combinator.F20 := ""
+
   setting := {}
 
   setting.doublePress := 70
@@ -630,7 +790,7 @@ ru_O()
   dual.combine("LAlt",letter,setting,combinator)
 }
 
-fr_h()
+fr_H()
 {
   letter := "h"
 
@@ -648,7 +808,7 @@ fr_h()
 
 }
 
-fr_j()
+fr_N()
 {
   letter := "n"
 
@@ -657,6 +817,8 @@ fr_j()
   combinator.LShift := ["{Shift Up}",1]
 
   combinator.CapsLockShift := "n"
+
+  combinator.F20 := ""
 
   setting := {}
 
@@ -701,117 +863,7 @@ hat_accent()
 }
 
 ; ---------------------------
-
-RU_T := {}
-
-RU_T.mod := "LAlt"
-
-RU_T.letter := "{U+0442}" ; т {U+0442}
-
-RU_T.setting := false
-
-combinator := {}
-
-combinator.Shift := "{U+0422}" ; Т {U+0422}
-
-combinator.CapsLock := "{U+0422}" ; Т {U+0422}
-
-combinator.LAlt := "t"
-
-combinator.RAlt := "t"
-
-combinator.Ctrl := "t"
-
-combinator.CapsLockShift := "{U+0442}" ; т {U+0442}
-
-RU_T.combinator := combinator
-
-Loc.RU_T := RU_T
-
 ; ---------------------------
-
-RU_I := {}
-
-RU_I.mod := "Ctrl"
-
-RU_I.letter := "{U+0438}" ; и {U+0438}
-
-RU_I.setting := false
-
-combinator := {}
-
-combinator.Shift := "{U+0418}" ; И {U+0418}
-
-combinator.CapsLock := "{U+0418}" ; И {U+0418}
-
-combinator.LAlt := "i"
-
-combinator.RAlt := "i"
-
-combinator.Ctrl := "i"
-
-combinator.CapsLockShift := "{U+0438}" ; {U+0438}
-
-RU_I.combinator := combinator
-
-Loc.RU_I := RU_I
-
-; ---------------------------
-
-RU_C := {}
-
-RU_C.mod := "RShift"
-
-RU_C.letter := "{U+0447}" ; ч U+0447
-
-RU_C.setting := false
-
-combinator := {}
-
-combinator.Shift := "{U+0427}" ; Ч U+0427
-
-combinator.CapsLock := "{U+0427}" ; Ч U+0427
-
-combinator.LAlt := "c"
-
-combinator.RAlt := "c"
-
-combinator.Ctrl := "c"
-
-combinator.CapsLockShift := "{U+0447}" ; ч U+0447
-
-RU_C.combinator := combinator
-
-Loc.RU_C := RU_C
-
-; ---------------------------
-
-RU_dot := {}
-
-RU_dot.mod := "RAlt"
-
-RU_dot.letter := "." 
-
-RU_dot.setting := {delay:70,doublePress:70,timeout:400}
-
-combinator := {}
-
-combinator.Shift := "{U+0427}" ; Ы ; {U+042B}
-
-combinator.CapsLock := "."
-
-combinator.LAlt := "."
-
-combinator.RAlt := "."
-
-combinator.Ctrl := "."
-
-combinator.CapsLockShift := "."
-
-RU_dot.combinator := combinator
-
-Loc.RU_dot := RU_dot
-
 ; ---------------------------
 
 V := {}
@@ -859,28 +911,6 @@ combinator.LShift := [0]
 combinator.RShift := "H"
 
 Loc.H := H
-
-; ---------------------------
-
-NN := {}
-
-NN.mod := "F20"
-
-NN.letter := "{U+0439}" ; й U+0439
-
-NN.setting := false
-
-combinator := {}
-
-combinator.Shift := "{U+0419}" ; Й U+0419
-
-combinator.CapsLock := "{U+0419}" ; Й
-
-combinator.CapsLockShift := "{U+0439}" ; й
-
-NN.combinator := combinator
-
-Loc.NN := NN
 
 ; ---------------------------
 
@@ -1111,4 +1141,3 @@ C.single_quote.small := "{U+00E7}" ; ç
 Loc.C := C
 
 ; ---------------------------
-
