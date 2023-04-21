@@ -20,46 +20,68 @@ my_send(key)
     Dual.sendInternal(subKey)
   }
 }
+
+resolve_shift(topo,below)
+{
+
+  LS := GetKeyState("LShift")
+  RS := GetKeyState("RShift")
+
+  CL := GetKeyState("CapsLock","T")
+
+  S := 0
+
+  if (LS && RS)
+  {
+    go_up := "{LShift UP}{RShift UP}"
+    S := 2
+  }
+  else if (LS)
+  {
+    go_up := "{LShift UP}"
+    S := 1
+  }
+  else if (RS)
+  {
+    go_up := "{RShift UP}"
+    S := 1
+  }
+
+  if (CL)
+  {
+    topo := below
+    below := topo
+  }
+
+  data := {go_up:go_up,S:S,topo:topo,below:below}
+
+  return data
+}
+
 ru_symbol_and_letter(sym,small,cap)
 {
 
   dual.combo("")
 
-  RS  := GetKeyState("RShift")
-  LS  := GetKeyState("LShift")
-  CL := GetKeyState("CapsLock","T")
-  C  := GetKeyState("Ctrl")
-  A  := GetKeyState("Alt")
+  data := resolve_shift(sym,small)
 
-  if (LS && RS)
+  if (data.S = 2)
   {
-    SendInput {Blind}%cap%
+
+    toc := data.go_up . cap
+    SendInput %toc%
+    return
   }
-  else if (C || A)
-  {
-    dual.SendInput(sym)
-  }
-  else if (CL)
-  {
-    if (LS || RS)
-    {
-      dual.SendInput(small)
-    }
-    else
-    {
-      dual.SendInput(cap)
-    }
+
+  if (data.S = 1)
+  { 
+    toc := data.go_up . data.topo
+    SendInput %toc%
   }
   else
   {
-    if (LS || RS)
-    {
-      dual.SendInput(small)
-    }
-    else
-    {
-      dual.SendInput(sym)
-    } 
+    toc := data.go_up . data.below
+    SendInput %toc%
   }
 }
 
@@ -70,8 +92,6 @@ ru_number_symbol(num,symbol1,symbol2)
   RS  := GetKeyState("RShift")
   LS  := GetKeyState("LShift")
   CL := GetKeyState("CapsLock","T")
-  C  := GetKeyState("Ctrl")
-  A  := GetKeyState("Alt")
 
   if (LS && RS)
   {
@@ -111,24 +131,6 @@ ru_number_symbol(num,symbol1,symbol2)
 constant(below,topo)
 {
   dual.comboKey(below,{Shift:topo})
-}
-
-ru_remap_internal(en,small,cap,data)
-{
-
-  data.Shift := cap
-
-  data.CapsLock := cap
-
-  data.LAlt := en
-
-  data.Ctrl := en
-
-  data.RAlt := en
-
-  data.CapsLockShift := small
-
-  dual.comboKey(small,data)
 }
 
 switch_language_on_F20()
@@ -267,7 +269,7 @@ ru_remap_through_custom_with_number(en,small,large,num)
 
   if (LS)
   {
-    co := ["{Shift UP}",num]
+    co := ["{LShift UP}",num,"{LShift DOWN}"]
 
     return co
   }
@@ -414,7 +416,11 @@ fr_remap2(en,num)
 
   if (LS)
   {
-    dual.SendInput(num)
+
+    tos := "{LShift UP}{" . num . "}{LShift DOWN}"
+
+    SendInput %tos%
+
   }
   else
   {
@@ -429,7 +435,7 @@ fr_remap2_for_custom(en,num)
 
   if (LS)
   {
-    return ["{Shift Up}",num]
+    return ["{Shift UP}",num,"{Shift DOWN}"]
   }
   else
   {
@@ -485,42 +491,21 @@ ru_remap4(en,small,cap,num)
 
 ru_number(num,symbol)
 {
+
   dual.combo("")
 
-  LS := GetKeyState("LShift")
-  RS := GetKeyState("RShift")
+  data := resolve_shift(num,symbol)
 
-  CL := GetKeyState("CapsLock","T")
-  C  := GetKeyState("Ctrl")
-  A  := GetKeyState("Alt")
-
-  if (C || A)
+  if(data.S)
   {
-    SendInput {Blind}%num%
-  }
-  else if (CL)
-  {
-    if (RS || LS)
-    {
-      dual.SendInput(symbol)
-    }
-    else
-    {
-      dual.SendInput(num)
-    }
+    tos := data.go_up . data.topo
+    SendInput %tos%
   }
   else
   {
-    if (RS || LS)
-    {
-      dual.SendInput(num)
-    }
-    else
-    {
-      dual.SendInput(symbol)
-    }
+    tos :=  data.below
+    SendInput %tos%
   }
-
 }
 
 switch_language_main()
@@ -610,7 +595,7 @@ accent_letter(data)
 
     if (LS)
     {
-      return ["{Shift UP}",data.LShift]
+      return ["{LShift UP}",data.LShift,"{LShift DOWN}"]
     }
 
   }

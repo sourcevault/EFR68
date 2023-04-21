@@ -20,6 +20,14 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
 ;-------------RUSSIAN---------------
 
+F10::
+  init := "{Blind}"
+  below := "9"
+  tos :=  init . below
+  dmp(tos)
+  return
+
+
 #if (Toggle=1) ; RU
 {
 
@@ -47,7 +55,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *9::ru_number_symbol("8","]","~")
 
-  *0::ru_number("9","{!}")
+  *0::ru_number("9","{/}")
 
   *-::dual.comboKey("CapsLock")
 
