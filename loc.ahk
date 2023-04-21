@@ -11,6 +11,15 @@ global JustToggled := false
 
 Menu, Tray, Icon, cono/old.png
 
+
+my_send(key)
+{
+  as_list := Dual.subKeySet(key)
+
+  for index, subKey in as_list {
+    Dual.sendInternal(subKey)
+  }
+}
 ru_symbol_and_letter(sym,small,cap)
 {
 
@@ -175,6 +184,7 @@ ru_X()
   en    := "x"
 
   20F  := GetKeyState("F20")
+
   if (20F)
   {
     switch_language_main()
@@ -222,6 +232,24 @@ ru_C()
 
 }
 
+ru_dot()
+{
+
+  on_shift := "{U+042B}" ; Ы
+  en := "."
+
+  S := GetKeyState("Shift")
+
+  if(S)
+  {
+    return on_shift
+  }
+  else
+  {
+    return en
+  }
+
+}
 
 ru_remap_through_custom_with_number(en,small,large,num)
 {
@@ -267,6 +295,7 @@ ru_remap_through_custom_with_number(en,small,large,num)
     }
   }
 }
+
 ru_H()
 {
 
@@ -298,25 +327,18 @@ ru_NN()
 
 ; ---------------------------
 
-ru_dot()
+ru_N()
 {
 
-  on_shift := "{U+042B}" ; Ы
-  en := "."
+  small := "{U+0445}" ; н {U+043D}
+  large := "{U+0425}" ; Н {U+041D}
+  en := "n"
+  num := 1
 
-  S := GetKeyState("Shift")
+  key := ru_remap_through_custom_with_number(en,small,large,num)
 
-  if(S)
-  {
-    return on_shift
-  }
-  else
-  {
-    return en
-  }
+  return key
 }
-
-; ---------------------------
 
 ru_remap3(en,small,cap)
 {
@@ -327,7 +349,6 @@ ru_remap3(en,small,cap)
   CL := GetKeyState("CapsLock","T")
   C := GetKeyState("Ctrl")
   A := GetKeyState("Alt")
-
 
   if (C || A)
   {
@@ -358,30 +379,61 @@ ru_remap3(en,small,cap)
 
 }
 
+ru_A()
+{
+  small := "{U+0430}" ; а {U+0430}
+  large := "{U+0410}" ; А {U+0410}
+  en := "a"
+  num := 2
+
+  key := ru_remap_through_custom_with_number(en,small,large,num)
+
+  return key
+}
+
+ru_O()
+{
+
+  small := "{U+043E}" ; о {U+043E}
+  large := "{U+041E}" ; О {U+041E}
+  en := "o"
+  num := 3
+
+  key := ru_remap_through_custom_with_number(en,small,large,num)
+
+  return key
+
+}
 
 fr_remap2(en,num)
 {
 
   dual.combo("")
 
-  RS := GetKeyState("RShift")
   LS := GetKeyState("LShift")
-  CL := GetKeyState("CapsLock","T")
 
-  if (CL)
+  if (LS)
   {
-    SendInput {Blind}%en%
+    dual.SendInput(num)
   }
   else
   {
-    if (LS)
-    {
-      Dual.SendInput(num)
-    }
-    else
-    {
-      SendInput {Blind}%en%
-    }
+    SendInput {Blind}%en%
+  }
+}
+
+fr_remap2_for_custom(en,num)
+{
+
+  LS := GetKeyState("LShift")
+
+  if (LS)
+  {
+    return ["{Shift Up}",num]
+  }
+  else
+  {
+    return en
   }
 }
 
@@ -394,13 +446,12 @@ ru_remap4(en,small,cap,num)
   LS := GetKeyState("LShift")
   CL := GetKeyState("CapsLock","T")
 
-  LC  := GetKeyState("LCtrl")
+  C  := GetKeyState("Ctrl")
   LA  := GetKeyState("LAlt")
 
-  RC  := GetKeyState("RCtrl")
   RA  := GetKeyState("RAlt")
 
-  if (LC || LA || RC || RA)
+  if (C || LA || RA)
   {
     SendInput {Blind}%en%
   }
@@ -479,7 +530,7 @@ switch_language_main()
 
   dual.reset()
 
-  Toggle:=Mod(Toggle+1,2)
+  Toggle:=Mod(Toggle+1,3)
 
   switch Toggle
   {
@@ -520,40 +571,8 @@ key_to_switch_lang(char)
 
 }
 
-switch_language_on_F20_with_modifier()
+ru_E()
 {
-
-  currentKey := A_ThisHotkey
-
-  is_up := (SubStr(currentKey, -1) = "UP")
-
-  if (!is_up)
-  {
-    return
-  }
-
-  fn20 := GetKeyState("F20")
-
-  if (fn20)
-  {
-    switch_language_main()
-  }
-
-  return
-
-}
-
-ru_e()
-{
-
-  currentKey := A_ThisHotkey
-
-  is_up := (SubStr(currentKey, -1) = "UP")
-
-  if (!is_up)
-  {
-    return 1
-  }
 
   fn21 := GetKeyState("F21")
 
@@ -566,19 +585,19 @@ ru_e()
     
     if (S && L)
     {
-      dual.SendInput("{U+00EB}") ; ë U+00EB
+      return "{U+00EB}" ; ë U+00EB
     }
     else if (L || S)
     {
-      dual.SendInput("{U+00CB}") ; Ë U+00CB
+      return "{U+00CB}" ; Ë U+00CB
     }
     else
     {
-      dual.SendInput("{U+00EB}") ; ë U+00EB
+      return "{U+00EB}" ; ë U+00EB
     }
     return
   }
-  return
+  return "e"
 }
 
 accent_letter(data)
@@ -591,8 +610,7 @@ accent_letter(data)
 
     if (LS)
     {
-      dual.SendInput(data.LShift)
-      return
+      return ["{Shift UP}",data.LShift]
     }
 
   }
@@ -601,15 +619,15 @@ accent_letter(data)
   
   L := GetKeyState("CapsLock","T")
 
-  RS := GetKeyState("RShift")
+  S := GetKeyState("Shift")
 
   if (ks21)
   {
-    if (RS && L)
+    if (S && L)
     {
       cap := false
     }
-    else if (RS || L)
+    else if (S || L)
     {
       cap := true
     }
@@ -623,13 +641,13 @@ accent_letter(data)
       switch Accent
       {
         case 1:
-          dual.SendInput(data.single_quote.cap)
+          return data.single_quote.cap
         case 2:
-          dual.SendInput(data.double_quote.cap)
+          return data.double_quote.cap
         case 3:
-          dual.SendInput(data.grave.cap)
+          return data.grave.cap
         case 4:
-          dual.SendInput(data.hat.cap)
+          return data.hat.cap
         default:
           return
       }
@@ -639,13 +657,13 @@ accent_letter(data)
       switch Accent
       {
         case 1:
-          dual.SendInput(data.single_quote.small)
+          return data.single_quote.small
         case 2:
-          dual.SendInput(data.double_quote.small)
+          return data.double_quote.small
         case 3:
-          dual.SendInput(data.grave.small)
+          return data.grave.small
         case 4:
-          dual.SendInput(data.hat.small)
+          return data.hat.small
         default:
           return
       }
@@ -656,441 +674,28 @@ accent_letter(data)
   { 
     if(L) ; capslock is on
     {
-      if(RS)
+      if(S)
       {
-        dual.SendInput(data.small)
+        return data.small
       }
       else
       {
-        dual.SendInput(data.cap)
+        return data.cap
       }
     }
     else
     {
-      if(RS)
+      if(S)
       {
-        dual.SendInput(data.cap)
+        return data.cap
       }
       else
-      {
-        ds := data.small
-        SendInput {Blind}%ds%
+      { 
+        return data.small
       }
     }
   }
-
-  return
 }
-
-accent_letter_with_mod(data)
-{
-
-  currentKey := A_ThisHotkey
-
-  is_up := (SubStr(currentKey, -1) = "UP")
-
-  if (!is_up)
-  {
-    return
-  }
-
-  accent_letter(data)
-}
-
-
-my_combine(data)
-{
-  dual.combine(data.mod,data.letter,data.setting,data.combinator)
-}
-
-ru_N()
-{
-
-  combinator := {}
-
-  letter := "{U+043D}" ; н {U+043D}
-
-  combinator.LShift := ["{Shift UP}",1]
-
-  combinator.RShift := "{U+041D}" ; Н {U+041D}
-
-  combinator.CapsLock := "{U+041D}" ; Н {U+041D}
-
-  combinator.Alt := "n"
-
-  combinator.Ctrl := "n"
-
-  combinator.CapsLockShift := "{U+043D}" ; н {U+043D}
-  
-  combinator.F20 := ""
-
-  setting := {}
-
-  setting.doublePress := 70
-
-  setting.timeout := 100
-
-  dual.combine("F20",letter,setting,combinator)
-
-}
-
-ru_A()
-{
-
-  combinator := {}
-
-  letter := "{U+0430}" ; а {U+0430}
-
-  combinator.LShift := ["{Shift UP}",2]
-
-  combinator.RShift := "{U+0410}" ; А {U+0410}
-
-  combinator.CapsLock := "{U+0410}" ; А {U+0410}
-
-  combinator.Alt := "a"
-
-  combinator.Ctrl := "a"
-
-  combinator.CapsLockShift := "{U+0430}" ; а {U+0430}
-  
-  setting := {}
-
-  setting.doublePress := 70
-
-  setting.timeout := 100
-
-  dual.combine("Ctrl",letter,setting,combinator)
-
-}
-
-ru_O()
-{
-  combinator := {}
-
-  letter := "{U+043E}" ; о {U+043E}
-
-  combinator.LShift := ["{Shift UP}",3]
-
-  combinator.RShift := "{U+041E}" ; О {U+041E}
-
-  combinator.CapsLock := "{U+041E}" ; О {U+041E}
-
-  combinator.Alt := "o"
-
-  combinator.Ctrl := "o"
-
-  combinator.CapsLockShift := "{U+043E}" ; о {U+043E}
-  
-  setting := {}
-
-  setting.doublePress := 70
-
-  setting.timeout := 100
-
-  dual.combine("LAlt",letter,setting,combinator)
-}
-
-fr_H()
-{
-  letter := "h"
-
-  combinator := {}
-
-  combinator.LShift := ["{Shift Up}",0]
-
-  combinator.CapsLockShift := "h"
-
-  setting := {}
-
-  setting.doublePress := 70
-
-  dual.combine("RAlt",letter,setting,combinator)
-
-}
-
-fr_N()
-{
-  letter := "n"
-
-  combinator := {}
-
-  combinator.LShift := ["{Shift Up}",1]
-
-  combinator.CapsLockShift := "n"
-
-  combinator.F20 := ""
-
-  setting := {}
-
-  setting.doublePress := 70
-
-  dual.combine("F20",letter,setting,combinator)
-}
-combine_accent(symbol,num)
-{
-  dual.combine("F21",symbol)
-  Accent := num
-}
-
-combine_accent_symbol(symbol1,num,symbol2)
-{
-  dual.combine("F21",symbol1,{Shift:symbol2})
-  Accent := num
-}
-
-single_qoute_accent()
-{
-  dual.combine("F21","'",false,{F20:["'","'","Left"]})
-  Accent := 1
-}
-
-double_qoute_accent()
-{
-  dual.combine("F21","""",false,{F20:["""","""","Left"]})
-  Accent := 2
-}
-
-grave_accent()
-{
-  dual.combine("F21","``")
-  Accent := 3
-}
-
-hat_accent()
-{
-  dual.combine("F21","{^}")
-  Accent := 4
-}
-
-; ---------------------------
-; ---------------------------
-; ---------------------------
-
-V := {}
-
-V.mod := "LShift"
-
-V.letter := "{U+0431}" ; б U+0431
-
-V.setting := false
-
-combinator := {}
-
-combinator.Shift := "{U+0411}" ; Б U+0411
-
-combinator.CapsLock := "{U+0411}" ; Б
-
-combinator.LAlt := ["v"]
-
-combinator.LCtrl := ["v"]
-
-combinator.RAlt := ["v"]
-
-combinator.RCtrl := ["v"]
-
-combinator.CapsLockShift := "{U+0431}" ; б U+0431
-
-V.combinator := combinator
-
-Loc.V := V
-
-; ---------------------------
-
-H := {}
-
-H.mod := "LAlt"
-
-H.letter := "h"
-
-H.setting := false
-
-combinator := {}
-
-combinator.LShift := [0]
-
-combinator.RShift := "H"
-
-Loc.H := H
-
-; ---------------------------
-
-N := {}
-
-N.letter := "{U+0438}" ; и U+0438
-
-N.setting := false
-
-combinator := {}
-
-combinator.LCtrl := "n"
-
-combinator.RCtrl := "n"
-
-combinator.LAlt := "n"
-
-combinator.RAlt := "n"
-
-combinator.Shift := "{U+0418}" ; И U+0418
-
-combinator.F20 := 1
-
-combinator.CapsLock := "{U+0418}" ; И
-
-combinator.CapsLockShift := "{U+0438}" ; и
-
-N.combinator := combinator
-
-Loc.N := N
-
-; ---------------------------
-
-EE := {}
-
-EE.mod := "F20"
-
-EE.letter := "{U+00E9}" ; é U+00E9
-
-EE.setting := false
-
-combinator := {}
-
-combinator.Shift := "{U+00C9}" ; É U+00C9
-
-combinator.CapsLock := "{U+00C9}" ; É
-
-combinator.CapsLockShift := "{U+00E9}" ; é
-
-EE.combinator := combinator
-
-Loc.EE := EE
-
-; ---------------------------
-
-E := {}
-
-E.hat := {}
-
-E.grave := {}
-
-E.single_quote := {}
-
-E.double_quote := {}
-
-E.hat.cap := "{U+00CA}" ; Ê
-
-E.hat.small := "{U+00EA}" ; ê
-
-E.grave.cap := "{U+00C8}" ; È
-
-E.grave.small := "{U+00E8}" ; è
-
-E.single_quote.cap := "{U+00C9}" ; É
-
-E.single_quote.small := "{U+00E9}" ; é
-
-E.double_quote.cap := "{U+00CB}" ; Ë
-
-E.double_quote.small := "{U+00EB}" ; ë
-
-Loc.E := E
-
-; ---------------------
-
-A := {}
-
-A.hat := {}
-
-A.grave := {}
-
-A.single_quote := {}
-
-A.double_quote := {}
-
-A.small := "a"
-
-A.cap := "A"
-
-A.LShift := 2
-
-A.single_quote.cap := "{U+00C1}" ; Á
-
-A.single_quote.small := "{U+00E1}" ; á
-
-A.grave.cap := "{U+00C0}" ; À
-
-A.grave.small := "{U+00E0}" ; à
-
-A.hat.cap := "{U+00C2}" ; Â
-
-A.hat.small := "{U+00E2}" ; â
-
-A.double_quote.cap := "{U+00C4}" ; Ä
-
-A.double_quote.small := "{U+00E4}" ; ä
-
-Loc.A := A
-
-; ---------------------
-
-I := {}
-
-I.hat := {}
-
-I.grave := {}
-
-I.single_quote := {}
-
-I.double_quote := {}
-
-I.small := "i"
-
-I.cap := "I"
-
-I.grave.cap := "{U+00CC}" ; Ì
-I.grave.small := "{U+00EC}" ; ì
-
-I.single_quote.cap := "{U+00CD}" ; Í
-I.single_quote.small := "{U+00ED}" ; í
-
-I.hat.cap := "{U+00CE}" ; Î
-I.hat.small := "{U+00EE}" ; î
-
-I.double_quote.cap := "{U+00CF}" ; Ï
-I.double_quote.small := "{U+00EF}" ; ï
-
-Loc.I := I
-
-; ---------------------
-
-O := {}
-
-O.hat := {}
-
-O.grave := {}
-
-O.single_quote := {}
-
-O.double_quote := {}
-
-O.LShift := 3
-
-O.small := "o"
-
-O.cap := "O"
-
-O.grave.cap := "{U+00D2}" ; Ò
-O.grave.small := "{U+00F2}" ; ò
-
-O.single_quote.cap := "{U+00D3}" ; Ó
-O.single_quote.small := "{U+00F3}" ; ó
-
-O.hat.cap := "{U+00D4}" ; Ô
-O.hat.small := "{U+00F4}" ; ô
-
-O.double_quote.cap := "{U+00D6}" ; Ö
-O.double_quote.small := "{U+00F6}" ; ö
-
-Loc.O := O
 
 ; ---------------------
 
@@ -1126,6 +731,78 @@ Loc.U := U
 
 ; ---------------------
 
+fr_U()
+{
+  dual.combo("")
+
+  key := accent_letter(Loc.U)
+
+  my_send(key)
+}
+
+; ---------------------------
+
+single_qoute_accent()
+{
+  dual.combine("F21","'",false,{F20:["'","'","Left"]})
+  Accent := 1
+}
+
+double_qoute_accent()
+{
+  dual.combine("F21","""",false,{F20:["""","""","Left"]})
+  Accent := 2
+}
+
+grave_accent()
+{
+  dual.combine("F21","``")
+  Accent := 3
+}
+
+hat_accent()
+{
+  dual.combine("F21","{^}")
+  Accent := 4
+}
+
+; ---------------------
+
+I := {}
+
+I.hat := {}
+
+I.grave := {}
+
+I.single_quote := {}
+
+I.double_quote := {}
+
+I.small := "i"
+
+I.cap := "I"
+
+I.grave.cap := "{U+00CC}" ; Ì
+I.grave.small := "{U+00EC}" ; ì
+
+I.single_quote.cap := "{U+00CD}" ; Í
+I.single_quote.small := "{U+00ED}" ; í
+
+I.hat.cap := "{U+00CE}" ; Î
+I.hat.small := "{U+00EE}" ; î
+
+I.double_quote.cap := "{U+00CF}" ; Ï
+I.double_quote.small := "{U+00EF}" ; ï
+
+Loc.I := I
+
+fr_I()
+{
+  return accent_letter(Loc.I)
+}
+
+; ---------------------------
+
 C := {}
 
 C.single_quote := {}
@@ -1141,3 +818,156 @@ C.single_quote.small := "{U+00E7}" ; ç
 Loc.C := C
 
 ; ---------------------------
+
+fr_C()
+{
+  key := accent_letter(Loc.C)
+
+  return key
+}
+
+fr_H()
+{
+  return fr_remap2_for_custom("h",0) ; 0
+}
+
+fr_N()
+{
+  return fr_remap2_for_custom("n",1) ; 1
+}
+
+; ---------------------
+
+A := {}
+
+A.hat := {}
+
+A.grave := {}
+
+A.single_quote := {}
+
+A.double_quote := {}
+
+A.small := "a"
+
+A.cap := "A"
+
+A.LShift :=  2
+
+A.single_quote.cap := "{U+00C1}" ; Á
+
+A.single_quote.small := "{U+00E1}" ; á
+
+A.grave.cap := "{U+00C0}" ; À
+
+A.grave.small := "{U+00E0}" ; à
+
+A.hat.cap := "{U+00C2}" ; Â
+
+A.hat.small := "{U+00E2}" ; â
+
+A.double_quote.cap := "{U+00C4}" ; Ä
+
+A.double_quote.small := "{U+00E4}" ; ä
+
+Loc.A := A
+
+fr_A()
+{
+  return accent_letter(Loc.A)
+}
+
+O := {}
+
+O.hat := {}
+
+O.grave := {}
+
+O.single_quote := {}
+
+O.double_quote := {}
+
+O.LShift := 3
+
+O.small := "o"
+
+O.cap := "O"
+
+O.grave.cap := "{U+00D2}" ; Ò
+O.grave.small := "{U+00F2}" ; ò
+
+O.single_quote.cap := "{U+00D3}" ; Ó
+O.single_quote.small := "{U+00F3}" ; ó
+
+O.hat.cap := "{U+00D4}" ; Ô
+O.hat.small := "{U+00F4}" ; ô
+
+O.double_quote.cap := "{U+00D6}" ; Ö
+O.double_quote.small := "{U+00F6}" ; ö
+
+Loc.O := O
+
+fr_O()
+{
+
+  key := accent_letter(Loc.O)
+
+  return key
+}
+
+; ---------------------
+
+E := {}
+
+E.hat := {}
+
+E.grave := {}
+
+E.single_quote := {}
+
+E.double_quote := {}
+
+E.cap := "E"
+
+E.small :=  "e"
+
+E.hat.cap := "{U+00CA}" ; Ê
+
+E.hat.small := "{U+00EA}" ; ê
+
+E.grave.cap := "{U+00C8}" ; È
+
+E.grave.small := "{U+00E8}" ; è
+
+E.single_quote.cap := "{U+00C9}" ; É
+
+E.single_quote.small := "{U+00E9}" ; é
+
+E.double_quote.cap := "{U+00CB}" ; Ë
+
+E.double_quote.small := "{U+00EB}" ; ë
+
+Loc.E := E
+
+; ---------------------
+
+fr_E()
+{
+
+  key := accent_letter(Loc.E)
+
+  return key
+
+}
+
+fr_EE()
+{
+
+  large := "{U+00C9}" ; É
+  small := "{U+00E9}" ; é
+  en := "é"
+
+  key := ru_remap_through_custom(en,small,large)
+
+  return key
+}
