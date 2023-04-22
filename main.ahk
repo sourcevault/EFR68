@@ -20,13 +20,6 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
 ;-------------RUSSIAN---------------
 
-F10::
-  init := "{Blind}"
-  below := "9"
-  tos :=  init . below
-  dmp(tos)
-  return
-
 
 #if (Toggle=1) ; RU
 {
@@ -51,9 +44,9 @@ F10::
 
   *7::ru_number("6",">")
 
-  *8::ru_number_symbol("7","[","{U+2116}") ; №
+  *8::three_symbols("7","[","{U+2116}") ; №
 
-  *9::ru_number_symbol("8","]","~")
+  *9::three_symbols("8","]","~")
 
   *0::ru_number("9","{/}")
 
@@ -84,15 +77,14 @@ F10::
 
   *d::
   *d UP::dual.combine("LCtrl","",false,{custom:Func("ru_I")})
-
   *f::
+
   *f UP::dual.combine("RShift","",false,{custom:Func("ru_C")})
   
   *g::
   *g UP::dual.combine("RAlt","",false,{custom:Func("ru_dot")})
 
-
-  *LShift::ru_symbol_and_letter("\","{U+0449}","{U+0429}") ; щ  ; Щ
+  *LShift::three_symbols("{U+0449}","\","{U+0429}") ; щ  ; Щ
 
   *z::ru_remap3("g","{U+0433}","{U+0413}") ; г ; Г
 
@@ -167,7 +159,7 @@ F10::
 
   ; RIGHT NAV ROW
 
-  *y::ru_symbol_and_letter(",","{U+044D}","{U+042D}") ; э U+044D ; Э U+042D
+  *y::three_symbols("{U+044D}",",","{U+042D}") ; э U+044D ; Э U+042D
 
   *u::dual.comboKey("home")
 
@@ -254,7 +246,7 @@ F10::
 
   *8::ru_number("7","[")
 
-  *9::ru_number_symbol("8","]","~")
+  *9::three_symbols("8","]","~")
 
   *0::ru_number("9","/")
 
