@@ -485,7 +485,7 @@ switch_language_main()
 
   dual.reset()
 
-  Toggle:=Mod(Toggle+1,4)
+  Toggle:=Mod(Toggle+1,3)
 
   switch Toggle
   {
