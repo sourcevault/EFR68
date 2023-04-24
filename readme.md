@@ -1,9 +1,9 @@
 
-# EFR68
+# RULAT_68
 
 `⛔️ only for Windows ⛔️`
 
-⚠️ code provided will only work for Kinesis Advantage 2 ( or keyboard with similar layout ) with the  bottom row `\` remapped to `F8`, the repo is kept mainly to show the layout design.
+⚠️ code provided will only work for Kinesis Advantage 2 ( or keyboard with similar layout ) with the  bottom row `\` remapped to `F8`, the repo is kept mainly to show the layout design and what is possible
 
 Combined language keyboard layout using [autohotkey](https://www.autohotkey.com) and [dual.ahk](https://github.com/lydell/dual/) targeting english, french and russian symbols.
 
@@ -13,7 +13,7 @@ Make sure to have your default english keyboard to English (United States) US.
 
 - Vim friendly by having numbers accessible in home row.
 
-- Mouse friendly by having `Enter`, `Ctrl`, `Page UP` and `Page DN` on the left hand side.
+- Mouse friendly by having `Enter`, `Ctrl`, `Page UP` and `Page DOWN` on the left hand side.
 
 - `F20` to allow defining customized key binding for newer commands to prevent clash with already defined commands under `Shift`,`Alt` and `Ctrl`.
 
@@ -21,7 +21,7 @@ Make sure to have your default english keyboard to English (United States) US.
 
 - `Ctrl+minus` and `Ctrl+plus` on the left side to make it easy to zoom and zoom out.
 
-- Optimized for use with Abode product, and navigating panes while using mouse.
+- Optimized for use with Abode product and one handed navigation.
 
 ![](./layout.png)
 

@@ -8,9 +8,7 @@ global Toggle := 0
 
 global JustToggled := false
 
-
 Menu, Tray, Icon, cono/old.png
-
 
 my_send(key)
 {
@@ -228,6 +226,7 @@ ru_remap_through_custom_with_number(en,small,large,num)
     return co
   }
 
+
   if (Caps)
   {
     if (RS)
@@ -286,8 +285,8 @@ ru_NN()
 ru_N()
 {
 
-  small := "{U+0445}" ; н {U+043D}
-  large := "{U+0425}" ; Н {U+041D}
+  small := "{U+043D}" ; н {U+043D}
+  large := "{U+041D}" ; Н {U+041D}
   en := "n"
   num := 1
 
@@ -448,8 +447,34 @@ ru_number(num,symbol)
   }
   else
   {
-    tos :=  data.below
+
+    tos := data.below
+    ; tos := data.below
     SendInput %tos%
+  }
+}
+
+ru_number_1(num,symbol)
+{
+
+  dual.combo("")
+
+  data := resolve_shift(num,symbol)
+
+  if(data.S)
+  {
+    tos := data.go_up . data.topo
+    SendInput %tos%
+  }
+  else
+  {
+
+    tos := data.below
+
+    ; tos := "{Ctrl Down}{" . tos . "}{Ctrl Up}"
+
+    SendInput {Blind}%tos%
+
   }
 }
 
@@ -460,7 +485,7 @@ switch_language_main()
 
   dual.reset()
 
-  Toggle:=Mod(Toggle+1,3)
+  Toggle:=Mod(Toggle+1,4)
 
   switch Toggle
   {
@@ -471,8 +496,11 @@ switch_language_main()
       ToolTip, RU - pagedown (to exit)
       Menu, Tray, Icon, cono/rus.png
     case 2:
-      ToolTip, FR - pagedown (to exit)
-      Menu, Tray, Icon, cono/fr.png
+      ToolTip, FR 1 - pagedown (to exit)
+      Menu, Tray, Icon, cono/fr_1.png
+    case 3:
+      ToolTip, FR 2 - pagedown (to exit)
+      Menu, Tray, Icon, cono/fr_2.png
 
   }
   SetTimer, RemoveToolTip, -5000
@@ -560,6 +588,8 @@ accent_letter(data)
           return data.grave.cap
         case 4:
           return data.hat.cap
+        case 5:
+          return data.tilda.cap
         default:
           return
       }
@@ -576,6 +606,8 @@ accent_letter(data)
           return data.grave.small
         case 4:
           return data.hat.small
+        case 5:
+          return data.tilda.small
         default:
           return
       }
@@ -617,6 +649,8 @@ U.hat := {}
 
 U.grave := {}
 
+U.tilda := {}
+
 U.single_quote := {}
 
 U.double_quote := {}
@@ -626,6 +660,9 @@ U.small := "u"
 U.cap := "U"
 
 U.LShift := 7
+
+U.tilda.small :=  "{U+0169}" ; ũ
+U.tilda.cap :=  "{U+0168}" ;Ũ
 
 U.grave.cap := "{U+00D9}" ; Ù
 U.grave.small := "{U+00F9}" ; ù
@@ -662,13 +699,13 @@ single_qoute_accent()
 
 double_qoute_accent()
 {
-  dual.combine("F21","""",false,{F20:["""","""","Left"]})
+  dual.combine("F21","""",false,{Shift:"!",F20:["""","""","Left"]})
   Accent := 2
 }
 
 grave_accent()
 {
-  dual.combine("F21","``")
+  dual.combine("F21","``",false,{Shift:"<"})
   Accent := 3
 }
 
@@ -678,11 +715,20 @@ hat_accent()
   Accent := 4
 }
 
+tilda_accent()
+{
+  dual.combine("F21","~",false)
+  Accent := 5
+}
+
+
 ; ---------------------
 
 I := {}
 
 I.hat := {}
+
+I.tilda := {}
 
 I.grave := {}
 
@@ -693,6 +739,10 @@ I.double_quote := {}
 I.small := "i"
 
 I.cap := "I"
+
+I.tilda.cap := "{U+0128}" ; Ĩ
+
+I.tilda.small := "{U+0129}" ; ĩ
 
 I.grave.cap := "{U+00CC}" ; Ì
 I.grave.small := "{U+00EC}" ; ì
@@ -743,18 +793,44 @@ fr_H()
   return fr_remap2_for_custom("h",0) ; 0
 }
 
+; --------------------------
+
+N := {}
+
+N.tilda := {}
+
+N.small := "n"
+
+N.cap := "N"
+
+N.LShift :=  1
+
+N.tilda.small := "{U+00F1}" ; ñ
+
+N.tilda.cap := "{U+0147}" ; Ň
+
+Loc.N := N
+
+; --------------------------
+
 fr_N()
 {
-  return fr_remap2_for_custom("n",1) ; 1
+
+  key := accent_letter(Loc.N)
+
+  return key
 }
 
 ; ---------------------
 
 A := {}
 
+
 A.hat := {}
 
 A.grave := {}
+
+A.tilda := {}
 
 A.single_quote := {}
 
@@ -765,6 +841,10 @@ A.small := "a"
 A.cap := "A"
 
 A.LShift :=  2
+
+A.tilda.small :=  "{U+00E3}" ; ã
+
+A.tilda.cap := "{U+00C3}" ; Ã
 
 A.single_quote.cap := "{U+00C1}" ; Á
 
@@ -793,11 +873,17 @@ O := {}
 
 O.hat := {}
 
+O.tilda := {}
+
 O.grave := {}
 
 O.single_quote := {}
 
 O.double_quote := {}
+
+O.tilda.small := "{U+00F5}" ; õ
+
+O.tilda.cap := "{U+00D5}" ; Õ
 
 O.LShift := 3
 
