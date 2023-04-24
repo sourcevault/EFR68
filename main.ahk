@@ -63,10 +63,10 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *a::ru_remap3("s","{U+0441}","{U+0421}") ; с ; С
 
   *s::
-  *s UP::dual.combine("LAlt","",false,{custom:Func("ru_T")})
+  *s UP::dual.combine("Ctrl","",false,{custom:Func("ru_T")})
 
   *d::
-  *d UP::dual.combine("Ctrl","",false,{custom:Func("ru_I")})
+  *d UP::dual.combine("RShift","",false,{custom:Func("ru_I")})
 
   *f::
   *f UP::dual.combine("RShift","",false,{custom:Func("ru_C")})
@@ -272,13 +272,13 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *a::dual.comboKey("s")
 
   *s::
-  *s UP::dual.combine("LAlt","t",{doublePress:30})
+  *s UP::dual.combine("Ctrl","t",{doublePress:30})
 
   *d::
-  *d UP::dual.combine("Ctrl","",{doublePress:30},{custom:Func("fr_I")})
+  *d UP::dual.combine("RShift","",{doublePress:30},{custom:Func("fr_I")})
 
   *f::
-  *f UP::dual.combine("RShift","",{doublePress:30},{custom:Func("fr_C")})
+  *f UP::dual.combine("LAlt","",{doublePress:30},{custom:Func("fr_C")})
 
   *g::
   *g UP::dual.combine("RAlt",".")

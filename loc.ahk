@@ -488,25 +488,27 @@ switch_language_main()
   switch Toggle
   {
     case 0:
-      ToolTip, EN - Left Alt (to exit)
+      ; ToolTip, EN - Left Alt (to exit)
       Menu, Tray, Icon, cono/old.png
     case 1:
-      ToolTip, RU - pagedown (to exit)
+      ; ToolTip, RU - pagedown (to exit)
       Menu, Tray, Icon, cono/rus.png
     case 2:
-      ToolTip, FR 1 - pagedown (to exit)
+      ; ToolTip, FR 1 - pagedown (to exit)
       Menu, Tray, Icon, cono/fr_1.png
     case 3:
-      ToolTip, FR 2 - pagedown (to exit)
+      ; ToolTip, FR 2 - pagedown (to exit)
       Menu, Tray, Icon, cono/fr_2.png
 
   }
-  SetTimer, RemoveToolTip, -5000
+  ; SetTimer, RemoveToolTip, 5000
 
-  RemoveToolTip:
-    ToolTip
-    return
-
+ ; {
+ ;  RemoveToolTip:
+ ;    sleep 2000
+ ;    ToolTip
+ ;    return
+ ; }
 }
 
 ru_E()
