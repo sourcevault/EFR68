@@ -30,13 +30,13 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   ; Left - TOP ROW
 
-  *1::ru_number(">","1")
+  *1::ru_number("{!}","1")
 
   *2::ru_number("@","2")
 
   *3::ru_number("#","3")
 
-  *4::ru_number("&","4") ; {
+  *4::ru_number("$","4") ; {
 
   *5::ru_number("%","5") ; }
 
@@ -53,7 +53,8 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   
   *r::ru_remap3("v","{U+0431}","{U+0411}") ; б U+0431 ;Б U+0411
 
-  *t::dual.comboKey("",{custom:Func("ru_X")})
+  *t::
+  *t UP::dual.combine("Ctrl","",false,{custom:Func("ru_X")})
 
   ; Left - HOME ROW
 
@@ -65,13 +66,13 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *s UP::dual.combine("LAlt","",false,{custom:Func("ru_T")})
 
   *d::
-  *d UP::dual.combine("LCtrl","",false,{custom:Func("ru_I")})
+  *d UP::dual.combine("Ctrl","",false,{custom:Func("ru_I")})
 
   *f::
   *f UP::dual.combine("RShift","",false,{custom:Func("ru_C")})
   
   *g::
-  *g UP::dual.combine("RAlt","",false,{custom:Func("ru_dot")})
+  *g UP::dual.combine("RAlt","",{doublePress:40},{custom:Func("ru_dot")})
 
   *LShift::three_symbols("{U+0449}","\","{U+0429}") ; щ  ; Щ
 
@@ -124,11 +125,24 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *RWin::switch_language_main()
 
-  *PgUp::
-  *PgUp UP::dual.combine("F20","",false,{custom:Func("ru_NN")})
+
+  *PgUp::dual.comboKey("Delete")
 
   *PgDn::
-  *PgDn UP::tilda_accent()
+  *PgDn UP::
+
+    if (JustToggled)
+    {
+      JustToggled := false
+      SendInput {F20 up}
+    }
+    else
+    {
+      dual.combine("F20","",false,{custom:Func("ru_NN")})
+    }
+
+    return
+
 
   *Enter::
   *Enter UP::dual.combine("LAlt","",{doublePress: 30},{custom:Func("ru_E")})
@@ -171,22 +185,21 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *h UP::dual.combine("RAlt","",{doublePress:30},{custom:Func("ru_H")})
 
   *j::
-  *j UP::
+  *j UP::dual.combine("Ctrl","",{doublePress:30},{custom:Func("ru_N")})
+    
 
+  *k::
+  *k UP::
     if (JustToggled)
     {
       JustToggled := false
       SendInput {F20 up}
     }
-    else 
+    else
     {
-      dual.combine("F20","",{doublePress:30},{custom:Func("ru_N")})
+      dual.combine("F20","",{doublePress:30},{custom:Func("ru_A")})
     }
-
     return
-
-  *k::
-  *k UP::dual.combine("Ctrl","",{doublePress:30},{custom:Func("ru_A")})
 
   *l::
   *l UP::dual.combine("LAlt","",{doublePress:30},{custom:Func("ru_O")})
@@ -208,13 +221,13 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *RShift::ru_remap3("j","{U+0436}","{U+0416}") ; ж {U+0436} ; Ж {U+0416}
 
-  *up::constant(";","?")
+  *up::constant("/","?")
 
-  *down::constant(":","*")
+  *down::constant("(","*")
 
-  *[::constant("{#}","&")
+  *[::constant(")",";")
 
-  *]::dual.comboKey("^")
+  *]::dual.comboKey("^",{Shift:"&"})
 
 }
 
@@ -226,7 +239,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *=::
   *= UP::grave_accent()
 
-  *1::ru_number(">","1")
+  *1::ru_number("{!}","1")
 
   *2::ru_number("@","2")
 
@@ -250,9 +263,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *r::dual.comboKey("v")
 
   *t::
-    dual.comboKey("x",{F20:""})
-    switch_language_on_F20()
-    return
+  *t UP::dual.combine("Ctrl","",false,{custom:Func("fr_X")})
 
   ; ;-------------------------
 
@@ -324,7 +335,8 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
 ;   ; ;-------------------------
 
-  *LAlt::dual.comboKey("Delete")
+  *LAlt::
+  *LAlt UP::tilda_accent()
 
   *Home::dual.comboKey("PgUp")
 
@@ -334,14 +346,25 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *RWin::switch_language_main()
 
-  *PgUp::
-  *PgUp UP::dual.combine("F20","",false,{custom:Func("ru_NN")})
-
-  *PgDn::
-  *PgDn UP::tilda_accent()
-
   *Enter::
   *Enter UP::dual.combine("LAlt","",{doublePress:70},{custom:Func("fr_E")})
+
+  *PgUp::dual.comboKey("Delete")
+
+  *PgDn::
+  *PgDn UP::
+
+    if (JustToggled)
+    {
+      JustToggled := false
+      SendInput {F20 up}
+    }
+    else
+    {
+      dual.combine("F20","",false,{custom:Func("fr_EE")})
+    }
+
+    return
 
   *RCtrl::
   *RCtrl UP::dual.combine("Ctrl","{Esc}",{doublePress:250})
@@ -392,13 +415,21 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
     }
     else 
     {
-      dual.combine("F20","",{doublePress:30},{custom:Func("fr_N")})
+      dual.combine("Ctrl","",{doublePress:30},{custom:Func("fr_N")})
     }
     return
 
   *k::
   *k UP::
-    dual.combine("Ctrl","",{doublePress:30},{custom:Func("fr_A")})
+    if (JustToggled)
+    {
+      JustToggled := false
+      SendInput {F20 up}
+    }
+    else 
+    {
+      dual.combine("F20","",{doublePress:30},{custom:Func("fr_A")})
+    }
     return
 
   *l::
@@ -431,7 +462,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *down::dual.comboKey("(",{Shift:"*"})
 
-  *[::dual.comboKey(")",{Shift:";"})
+  *[::dual.comboKey(")",{Shift:["{Shift UP}","{;}","{Shift DOWN}"]})
 
   *]::
   *] UP::hat_accent()
@@ -615,7 +646,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *2::ru_number("1","(")
 
-  *3::ru_number_1("2",")")
+  *3::ru_number("2",")")
 
   *4::ru_number("3","{{}") ; {
 

@@ -150,6 +150,19 @@ ru_X()
   return key
 }
 
+fr_X()
+{
+
+  20F  := GetKeyState("F20")
+
+  if (20F)
+  {
+    switch_language_main()
+    return ""
+  }
+
+  return "x"
+}
 
 ru_T()
 {
@@ -188,21 +201,28 @@ ru_C()
 
 ru_dot()
 {
-
-  on_shift := "{U+042B}" ; Ы
+  large := "{U+042B}" ; Ы
+  small := "{U+044B}" ; ы
   en := "."
 
-  S := GetKeyState("Shift")
+  data := resolve_shift(small,en)
 
-  if(S)
+  if (data.S = 2)
   {
-    return on_shift
+    toc := data.go_up . large
+    return toc
+  }
+
+  if (data.S = 1)
+  { 
+    toc := data.go_up . data.topo
+    return toc
   }
   else
   {
-    return en
+    toc := data.go_up . data.below
+    return toc
   }
-
 }
 
 ru_remap_through_custom_with_number(en,small,large,num)
@@ -300,21 +320,23 @@ ru_remap3(en,below,topo)
 
   dual.combo("")
 
-  S := GetKeyState("Shift")
-  CL := GetKeyState("CapsLock","T")
   C := GetKeyState("Ctrl")
   A := GetKeyState("Alt")
+
+  if (C || A)
+  {
+    SendInput {Blind}%en%
+    return
+  }
+
+  S := GetKeyState("Shift")
+  CL := GetKeyState("CapsLock","T")
 
   if (CL)
   { 
     tmp := topo
     topo := below
     below := tmp
-  }
-
-  if (C || A)
-  {
-    SendInput {Blind}%en%
   }
 
   if (S)
@@ -451,30 +473,6 @@ ru_number(num,symbol)
     tos := data.below
     ; tos := data.below
     SendInput %tos%
-  }
-}
-
-ru_number_1(num,symbol)
-{
-
-  dual.combo("")
-
-  data := resolve_shift(num,symbol)
-
-  if(data.S)
-  {
-    tos := data.go_up . data.topo
-    SendInput %tos%
-  }
-  else
-  {
-
-    tos := data.below
-
-    ; tos := "{Ctrl Down}{" . tos . "}{Ctrl Up}"
-
-    SendInput {Blind}%tos%
-
   }
 }
 
@@ -699,7 +697,7 @@ single_qoute_accent()
 
 double_qoute_accent()
 {
-  dual.combine("F21","""",false,{Shift:"!",F20:["""","""","Left"]})
+  dual.combine("F21","""",false,{Shift:">",F20:["""","""","Left"]})
   Accent := 2
 }
 
@@ -955,8 +953,8 @@ fr_E()
   key := accent_letter(Loc.E)
 
   return key
-
 }
+
 
 fr_EE()
 {
