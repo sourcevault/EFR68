@@ -21,8 +21,8 @@ my_send(key)
 
 resolve_shift(topo,below)
 {
-
   LS := GetKeyState("LShift")
+
   RS := GetKeyState("RShift")
 
   CL := GetKeyState("CapsLock","T")
@@ -32,7 +32,7 @@ resolve_shift(topo,below)
   if (LS && RS)
   {
     go_up := "{LShift UP}{RShift UP}"
-    S := 2
+    S := 3
   }
   else if (LS)
   {
@@ -42,7 +42,7 @@ resolve_shift(topo,below)
   else if (RS)
   {
     go_up := "{RShift UP}"
-    S := 1
+    S := 2
   }
 
   if (CL)
@@ -56,6 +56,12 @@ resolve_shift(topo,below)
 
   return data
 }
+
+fr_remap(letter,symbol)
+{
+
+}
+
 
 three_symbols(small,mid,tower)
 {
@@ -101,26 +107,50 @@ switch_language_on_F20()
 
 }
 
-ru_remap_through_custom(en,below,topo)
+ru_remap_through_custom(ob)
 {
-  S    := GetKeyState("Shift")
+
   Caps := GetKeyState("CapsLock","T")
   C    := GetKeyState("Ctrl")
   A    := GetKeyState("Alt")
+  LS   := GetKeyState("LShift")
+  RS   := GetKeyState("RShift")
+
+  if (ob.LShift)
+  {
+    if (LS)
+    {
+      return ["{LShift UP}",ob.LShift,"{LShift DOWN}"]
+    }
+  }
+
+  if (ob.RShift)
+  {
+    if (RS)
+    {
+      return ["{RShift UP}",ob.RShift,"{RShift DOWN}"]
+    }
+  }
 
   if (C || A)
   {
-    return en
+    if (ob.en)
+    {
+      return ob.en
+    }
+    return ob.below
   }
+
+  below := ob.below
+  topo := ob.topo
 
   if (Caps)
   {
-    tmp := topo
-    topo := below
-    below := tmp
+    topo := ob.below
+    below := ob.topo
   }
 
-  if (S)
+  if (LS || RS)
   {
     return topo
   }
@@ -133,9 +163,11 @@ ru_remap_through_custom(en,below,topo)
 ru_X()
 {
 
-  large := "{U+042E}" ;Ю
-  small := "{U+044E}" ;ю
-  en    := "x"
+  ob := {}
+
+  ob.topo := "{U+042E}" ;Ю
+  ob.below := "{U+044E}" ;ю
+  ob.en    := "x"
 
   20F  := GetKeyState("F20")
 
@@ -145,7 +177,7 @@ ru_X()
     return ""
   }
 
-  key := ru_remap_through_custom(en,small,large)
+  key := ru_remap_through_custom(ob)
 
   return key
 }
@@ -153,7 +185,7 @@ ru_X()
 fr_X()
 {
 
-  20F  := GetKeyState("F20")
+  20F := GetKeyState("F20")
 
   if (20F)
   {
@@ -166,11 +198,14 @@ fr_X()
 
 ru_T()
 {
-  large := "{U+0422}" ;Т
-  small := "{U+0442}" ;т
-  en    := "t"
 
-  key := ru_remap_through_custom(en,small,large)
+  ob := {}
+
+  ob.topo  := "{U+0422}" ;Т
+  ob.below := "{U+0442}" ;т
+  ob.en    := "t"
+
+  key := ru_remap_through_custom(ob)
 
   return key
 }
@@ -178,22 +213,27 @@ ru_T()
 
 ru_I()
 {
-  large := "{U+0418}" ; И {U+0418}
-  small := "{U+0438}" ; и {U+0438}
-  en := "i"
+  ob := {}
 
-  key := ru_remap_through_custom(en,small,large)
+  ob.topo  := "{U+0418}" ; И {U+0418}
+  ob.below := "{U+0438}" ; и {U+0438}
+  ob.en    := "i"
+
+  key := ru_remap_through_custom(ob)
 
   return key
 }
 
 ru_C()
 {
-  large := "{U+0427}" ; Ч U+0427
-  small := "{U+0447}" ; ч U+0447
-  en := "c"
 
-  key := ru_remap_through_custom(en,small,large)
+  ob := {}
+
+  ob.topo := "{U+0427}" ; Ч U+0427
+  ob.below := "{U+0447}" ; ч U+0447
+  ob.en := "c"
+
+  key := ru_remap_through_custom(ob)
 
   return key
 
@@ -201,6 +241,7 @@ ru_C()
 
 ru_dot()
 {
+
   large := "{U+042B}" ; Ы
   small := "{U+044B}" ; ы
   en := "."
@@ -290,11 +331,12 @@ ru_H()
 ru_NN()
 {
 
-  large := "{U+0419}" ; Й
-  small := "{U+0439}" ; й
-  en := "é"
+  ob := {}
 
-  key := ru_remap_through_custom(en,small,large)
+  ob.topo := "{U+0419}" ; Й
+  ob.below := "{U+0439}" ; й
+
+  key := ru_remap_through_custom(ob)
 
   return key
 
@@ -416,14 +458,14 @@ ru_remap4(en,below,topo,num)
 
   dual.combo("")
 
+  C   := GetKeyState("Ctrl")
+  LA  := GetKeyState("LAlt")
+  RA  := GetKeyState("RAlt")
+
   RS  := GetKeyState("RShift")
   LS  := GetKeyState("LShift")
   CL  := GetKeyState("CapsLock","T")
 
-  C   := GetKeyState("Ctrl")
-  LA  := GetKeyState("LAlt")
-
-  RA  := GetKeyState("RAlt")
 
   if (C || LA || RA)
   {
@@ -476,6 +518,24 @@ ru_number(num,symbol)
   }
 }
 
+
+fn_row(sym,num)
+{
+
+  dual.combo("")
+
+  CL  := GetKeyState("CapsLock","T")
+
+  if (CL)
+  {
+    Dual.SendInput(num)
+  }
+  else
+  {
+    SendInput %sym%
+  }
+}
+
 switch_language_main()
 {
 
@@ -483,22 +543,22 @@ switch_language_main()
 
   dual.reset()
 
-  Toggle:=Mod(Toggle+1,3)
+  Toggle:=Mod(Toggle+1,4)
 
   switch Toggle
   {
     case 0:
-      ; ToolTip, EN - Left Alt (to exit)
+      ; ToolTip, EN
       Menu, Tray, Icon, cono/old.png
     case 1:
-      ; ToolTip, RU - pagedown (to exit)
-      Menu, Tray, Icon, cono/rus.png
-    case 2:
-      ; ToolTip, FR 1 - pagedown (to exit)
+      ; ToolTip, FR 1
       Menu, Tray, Icon, cono/fr_1.png
-    case 3:
-      ; ToolTip, FR 2 - pagedown (to exit)
+    case 2:
+      ; ToolTip, FR 2
       Menu, Tray, Icon, cono/fr_2.png
+    case 3:
+      ; ToolTip, RU
+      Menu, Tray, Icon, cono/rus.png
 
   }
   ; SetTimer, RemoveToolTip, 5000
@@ -551,6 +611,18 @@ accent_letter(data)
     if (LS)
     {
       return ["{LShift UP}",data.LShift,"{LShift DOWN}"]
+    }
+
+  }
+
+  if (data.RShift)
+  {
+
+    LS := GetKeyState("RShift")
+
+    if (LS)
+    {
+      return ["{RShift UP}",data.RShift,"{RShift DOWN}"]
     }
 
   }
@@ -697,15 +769,15 @@ single_qoute_accent()
   Accent := 1
 }
 
-double_qoute_accent()
+double_quote_accent()
 {
-  dual.combine("F21","""",false,{Shift:">",F20:["""","""","Left"]})
+  dual.combine("F21","""",false,{F20:["""","""","Left"]})
   Accent := 2
 }
 
 grave_accent()
 {
-  dual.combine("F21","``",false,{Shift:"<"})
+  dual.combine("F21","``",false)
   Accent := 3
 }
 
@@ -740,6 +812,8 @@ I.small := "i"
 
 I.cap := "I"
 
+I.RShift := ")"
+
 I.tilda.cap := "{U+0128}" ; Ĩ
 
 I.tilda.small := "{U+0129}" ; ĩ
@@ -769,9 +843,12 @@ C := {}
 
 C.single_quote := {}
 
+C.RShift := ":"
+
 C.small := "c"
 
 C.cap := "C"
+
 
 C.single_quote.cap := "{U+00C7}" ; Ç
 
@@ -824,7 +901,6 @@ fr_N()
 ; ---------------------
 
 A := {}
-
 
 A.hat := {}
 
@@ -961,11 +1037,16 @@ fr_E()
 fr_EE()
 {
 
-  large := "{U+00C9}" ; É
-  small := "{U+00E9}" ; é
-  en := "é"
+  ob := {}
 
-  key := ru_remap_through_custom(en,small,large)
+  ob.topo := "{U+00C9}" ; É
+  ob.below := "{U+00E9}" ; é
+  ob.en := "é"
 
-  return key
+  ob.LShift := "?"
+
+  key := ru_remap_through_custom(ob)
+
+  my_send(key)
+
 }
