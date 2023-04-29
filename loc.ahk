@@ -132,23 +132,24 @@ ru_remap_through_custom(ob)
     }
   }
 
+  below := ob.below
+  topo := ob.topo
+
+  if (Caps)
+  {
+    tmp := ob.topo
+    topo := ob.below
+    below := tmp
+  }
+
   if (C || A)
   {
     if (ob.en)
     {
       return ob.en
     }
-    return ob.below
   }
 
-  below := ob.below
-  topo := ob.topo
-
-  if (Caps)
-  {
-    topo := ob.below
-    below := ob.topo
-  }
 
   if (LS || RS)
   {
@@ -422,12 +423,12 @@ fr_remap2(en,num)
 
   dual.combo("")
 
-  LS := GetKeyState("LShift")
+  LS := GetKeyState("RShift")
 
   if (LS)
   {
 
-    tos := "{LShift UP}{" . num . "}{LShift DOWN}"
+    tos := "{RShift UP}{" . num . "}{RShift DOWN}"
 
     SendInput %tos%
 
@@ -441,11 +442,11 @@ fr_remap2(en,num)
 fr_remap2_for_custom(en,num)
 {
 
-  LS := GetKeyState("LShift")
+  RS := GetKeyState("RShift")
 
-  if (LS)
+  if (RS)
   {
-    return ["{Shift UP}",num,"{Shift DOWN}"]
+    return ["{RShift UP}",num,"{RShift DOWN}"]
   }
   else
   {
@@ -731,7 +732,7 @@ U.small := "u"
 
 U.cap := "U"
 
-U.LShift := 7
+U.RShift := 7
 
 U.tilda.small :=  "{U+0169}" ; ũ
 U.tilda.cap :=  "{U+0168}" ;Ũ
@@ -769,9 +770,9 @@ single_qoute_accent()
   Accent := 1
 }
 
-double_quote_accent()
+double_quote_accent(RSH)
 {
-  dual.combine("F21","""",false,{F20:["""","""","Left"]})
+  dual.combine("F21","""",false,{F20:["""","""","Left"],RShift:RSH})
   Accent := 2
 }
 
@@ -880,7 +881,7 @@ N.small := "n"
 
 N.cap := "N"
 
-N.LShift :=  1
+N.RShift :=  1
 
 N.tilda.small := "{U+00F1}" ; ñ
 
@@ -916,7 +917,7 @@ A.small := "a"
 
 A.cap := "A"
 
-A.LShift :=  2
+A.RShift :=  2
 
 A.tilda.small :=  "{U+00E3}" ; ã
 
@@ -947,6 +948,10 @@ fr_A()
 
 O := {}
 
+O.small := "o"
+
+O.cap := "O"
+
 O.hat := {}
 
 O.tilda := {}
@@ -961,11 +966,7 @@ O.tilda.small := "{U+00F5}" ; õ
 
 O.tilda.cap := "{U+00D5}" ; Õ
 
-O.LShift := 3
-
-O.small := "o"
-
-O.cap := "O"
+O.RShift := 3
 
 O.grave.cap := "{U+00D2}" ; Ò
 O.grave.small := "{U+00F2}" ; ò
@@ -986,9 +987,9 @@ fr_O()
 
   key := accent_letter(Loc.O)
 
-  return key
-}
+  my_send(key)
 
+}
 ; ---------------------
 
 E := {}
@@ -1004,6 +1005,8 @@ E.double_quote := {}
 E.cap := "E"
 
 E.small :=  "e"
+
+E.RShift := "="
 
 E.hat.cap := "{U+00CA}" ; Ê
 
@@ -1043,7 +1046,7 @@ fr_EE()
   ob.below := "{U+00E9}" ; é
   ob.en := "é"
 
-  ob.LShift := "?"
+  ob.RShift := "?"
 
   key := ru_remap_through_custom(ob)
 
