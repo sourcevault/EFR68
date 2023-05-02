@@ -8,7 +8,7 @@ global Toggle := 0
 
 global JustToggled := false
 
-Menu, Tray, Icon, cono/old.png
+; Menu, Tray, Icon, cono/f.png
 
 my_send(key)
 {
@@ -55,11 +55,6 @@ resolve_shift(topo,below)
   data := {go_up:go_up,S:S,topo:topo,below:below}
 
   return data
-}
-
-fr_remap(letter,symbol)
-{
-
 }
 
 
@@ -544,13 +539,13 @@ switch_language_main()
 
   dual.reset()
 
-  Toggle:=Mod(Toggle+1,4)
+  Toggle:=Mod(Toggle+1,1)
 
   switch Toggle
   {
     case 0:
       ; ToolTip, EN
-      Menu, Tray, Icon, cono/old.png
+      Menu, Tray, Icon, cono/fr_1.png
     case 1:
       ; ToolTip, FR 1
       Menu, Tray, Icon, cono/fr_1.png
@@ -764,34 +759,34 @@ fr_U()
 
 ; ---------------------------
 
-single_qoute_accent()
+single_quote_accent(RSH)
 {
-  dual.combine("F21","'",false,{F20:["'","'","Left"]})
   Accent := 1
+  dual.combine("F21","'",false,{F20:["'","'","Left"],RShift:RSH})
 }
 
 double_quote_accent(RSH)
 {
-  dual.combine("F21","""",false,{F20:["""","""","Left"],RShift:RSH})
   Accent := 2
+  dual.combine("F21","""",false,{F20:["""","""","Left"],RShift:RSH})
 }
 
 grave_accent()
 {
-  dual.combine("F21","``",false)
   Accent := 3
+  dual.combine("F21","``",false)
 }
 
 hat_accent()
 {
-  dual.combine("F21","{^}")
   Accent := 4
+  dual.combine("F21","{^}")
 }
 
 tilda_accent()
 {
-  dual.combine("F21","~",false)
   Accent := 5
+  dual.combine("F21","~",false)
 }
 
 
@@ -985,6 +980,7 @@ Loc.O := O
 fr_O()
 {
 
+  dual.combo("")
   key := accent_letter(Loc.O)
 
   my_send(key)
@@ -1037,7 +1033,7 @@ fr_E()
 }
 
 
-fr_EE()
+fr_EE(RSH)
 {
 
   ob := {}
@@ -1046,7 +1042,7 @@ fr_EE()
   ob.below := "{U+00E9}" ; é
   ob.en := "é"
 
-  ob.RShift := "?"
+  ob.RShift := RSH
 
   key := ru_remap_through_custom(ob)
 

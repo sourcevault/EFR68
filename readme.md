@@ -1,5 +1,5 @@
 
-# RULAT_68
+# RULA_68
 
 `⛔️ only for Windows ⛔️`
 
@@ -18,8 +18,6 @@ Make sure to have your default english keyboard to English (United States) US.
 - `F20` to allow defining customized key binding for newer commands to prevent clash with already defined commands under `Shift`,`Alt` and `Ctrl`.
 
 - Cut, Copy, Paste, Undo all in friendly location.
-
-- `Ctrl+minus` and `Ctrl+plus` on the left side to make it easy to zoom and zoom out.
 
 - Optimized for use with Abode product and one handed navigation.
 
