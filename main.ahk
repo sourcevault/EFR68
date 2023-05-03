@@ -22,6 +22,12 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
 ; ------------------French -----------------
 
+*F1::
+  dual.combo("")
+  SendInput {Ctrl DOWN}
+  SendInput {U+00E9}{Ctrl UP}
+  return
+
 #if (Toggle=0) ; French Version 4
 {
 
@@ -94,7 +100,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *v::dual.comboKey("v",{RShift:"$"})
 
-  *b::dual.comboKey("x",{F20:"",RShift:"+"})
+  *b::dual.comboKey("x",{RShift:"+"})
 
   ; ;-------------------------
 
