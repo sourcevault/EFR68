@@ -62,11 +62,11 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *q::dual.comboKey("g",{RShift:">"})
 
-  *w::dual.comboKey("m",{RShift:"{"})
+  *w::dual.comboKey(".",{RShift:"{"})
 
   *e::dual.comboKey("l",{RShift:"}"})
 
-  *r::dual.comboKey("d",{RShift:"#"})
+  *r::dual.comboKey("m",{RShift:"#"})
 
   *t::dual.comboKey("k",{RShift:"%"})
 
@@ -85,7 +85,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *f UP::dual.combine("RShift","",{doublePress:30},{custom:Func("fr_C")})
 
   *g::
-  *g UP::dual.combine("RAlt",".",false,{RShift:["{RShift UP}","-","{RShift DOWN}"]})
+  *g UP::dual.combine("RAlt","d",false,{RShift:["{RShift UP}","-","{RShift DOWN}"]})
 
   ; ; -------------------------
 
@@ -176,7 +176,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *Backspace UP::dual.combine("Ctrl","Backspace",{doublePress:250})
 
   *Delete::
-  *Delete UP::dual.combine("LShift","Enter")
+  *Delete UP::dual.combine("LShift","Tab")
 
   *LCtrl::dual.comboKey("{Esc}")
 
@@ -194,7 +194,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
     }
     else
     {
-      dual.combine("F20","Tab",{doublePress:250})
+      dual.combine("F20","Enter",{doublePress:250})
     }
 
     return
