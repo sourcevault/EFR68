@@ -178,7 +178,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *Delete::
   *Delete UP::dual.combine("LShift","Tab")
 
-  *LCtrl::dual.comboKey("{Esc}")
+  *LCtrl::dual.comboKey("Enter")
 
    ; ;-------------------------
 
@@ -194,7 +194,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
     }
     else
     {
-      dual.combine("F20","Enter",{doublePress:250})
+      dual.combine("F20","{Esc}",{doublePress:250})
     }
 
     return
