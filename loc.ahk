@@ -149,7 +149,7 @@ ru_I()
   ob.en     := "i"
   ob.RShift := ")"
 
-  ob.F21 := [3,"{U+0439}","{U+0419}"] ;"{U+0439}" ; й "{U+0419}" ; Й
+  ob.F21 := [2,"{U+0439}","{U+0419}"] ;"{U+0439}" ; й "{U+0419}" ; Й
 
   key := ru_remap_through_custom(ob)
 
@@ -322,8 +322,7 @@ ru_H()
 
   key := ru_remap_through_custom(ob)
 
-  return key
-
+  my_send(key)
 }
 
 ; ---------------------------
@@ -746,11 +745,10 @@ ru_EE()
 
   ob := {}
 
-  ob.sym := "*"
+  ob.sym := ["{RShift UP}","/","{RShift DOWN}"]
   ob.small := "{U+044D}" ; э
   ob.large := "{U+042D}" ; Э
-  ob.en := "'"
-  ob.F20 := ["'","'","Left"]
+  ob.en := "\"
 
   key := ru_four_symbols(ob)
 
@@ -758,20 +756,29 @@ ru_EE()
 
 }
 
-ru_single_quote_accent() ; Grave Accent
+ru_blackslash() ; grave_accent
+{
+
+  key := ru_EE()
+
+  my_send(key)
+
+}
+
+ru_single_quote_accent() ; Aigu Accent
 { 
   
-  dual.combine("F21","",{doublePress:30},{custom:Func("ru_EE")})
-  Accent := 3
+  dual.combine("F21","",{doublePress:30},{RShift:"%",LShift:"&"})
+  Accent := 1 
 }
 
 single_quote_accent(ob) ; Grave Accent
 { 
   ob.F20 := ["'","'","Left"]
 
-  Accent := 3
 
   dual.combine("F21","'",{doublePress:40},ob)
+  Accent := 1
 }
 
 double_quote_accent(ob) ; Diaeresis Accent
@@ -781,11 +788,17 @@ double_quote_accent(ob) ; Diaeresis Accent
   Accent := 2
 }
 
-backslash_accent(ob) ; Acute Accent
+grave_accent(below,ob) ; Acute Accent
 {
-  dual.combine("F21","\",{doublePress:40},ob)
-  Accent := 1
+  dual.combine("F21",below,{doublePress:40},ob)
+  Accent := 3
 }
+
+; backslash_accent(ob) ; Acute Accent
+; {
+;   dual.combine("F21","\",{doublePress:40},ob)
+;   Accent := 3
+; }
 
 hat_accent() ; Circunflex Accent
 {
@@ -871,7 +884,11 @@ fr_C()
 
 fr_H()
 {
-  return fr_remap2_for_custom("h",0)
+  dual.combo("")
+
+  key := fr_remap2_for_custom("h",0)
+
+  my_send(key)
 }
 
 ; --------------------------
@@ -988,7 +1005,6 @@ Loc.O := O
 fr_O()
 {
 
-  dual.combo("")
   key := accent_letter(Loc.O)
 
   my_send(key)

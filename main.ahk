@@ -28,9 +28,8 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
 #if (Toggle=0) ; French Version 5
 {
-  *=::dual.comboKey("CapsLock",{LShift:"{U+0060}"}) ; ` {U+0060}
-
-  ; *F8::dual.comboKey(":",{Shift:"{U+2116}"}) ; №
+  *=::
+  *= UP::grave_accent("CapsLock",{LShift:"{U+0060}"}) ; ` {U+0060}
 
   *1::fn_row("{F1}",1)
 
@@ -57,7 +56,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   ; ; -----------------------
 
   *Tab::
-  *Tab UP::backslash_accent({RShift:"%",LShift:"&"})
+  *Tab UP::single_quote_accent({RShift:"%",LShift:"&"})
 
   *q::dual.comboKey("z",{RShift:"!"})
 
@@ -124,18 +123,18 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *o::dual.comboKey("right")
   *p::dual.comboKey("end")
 
-  *\::dual.comboKey("j",{RShift:["{RShift UP}","/","{RShift DOWN}"]})
+  *\::dual.comboKey("\",{RShift:["{RShift UP}","/","{RShift DOWN}"]})
 
-  *h::
-  *h UP::dual.combine("RAlt","",{doublePress:30},{custom:Func("fr_H")})
+  *h::fr_H()
 
   *j::
-  *j UP::dual.combine("Ctrl","",{doublePress:30},{custom:Func("fr_N")})
+  *j UP::dual.combine("RAlt","",{doublePress:30},{custom:Func("fr_N")})
 
   *k::
   *k UP::dual.combine("RShift","",{doublePress:30},{custom:Func("fr_A")})
 
-  *l::fr_O()
+  *l::
+  *l UP::dual.combine("Ctrl","",{doublePress:30},{custom:Func("fr_O")})
 
   *;::fr_remap2("r",4)
 
@@ -154,8 +153,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   ; ;-------------------------
 
-  *RShift::
-  *RShift UP::single_quote_accent({RShift:"*"})
+  *RShift::dual.comboKey("j",{RShift:"*"})
 
    ; ;------------------------
 
@@ -260,7 +258,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   ; ; -----------------------
 
   *Tab::
-  *Tab UP::backslash_accent({RShift:"%"})
+  *Tab UP::ru_single_quote_accent()
 
   *q::ru_remap4("z","{U+0437}","{U+0417}","!") ; з ; З
 
@@ -324,18 +322,18 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *o::dual.comboKey("right")
   *p::dual.comboKey("end")
 
-  *\::ru_remap4("j","{U+0436}","{U+0416}","/") ; ж {U+0436} ; Ж {U+0416}
+  *\::ru_blackslash()
 
-  *h::
-  *h UP::dual.combine("RAlt","",{doublePress:30},{custom:Func("ru_H")})
+  *h::ru_H()
 
   *j::
-  *j UP::dual.combine("Ctrl","",{doublePress:30},{custom:Func("ru_N")})
+  *j UP::dual.combine("RAlt","",{doublePress:30},{custom:Func("ru_N")})
 
   *k::
   *k UP::dual.combine("RShift","",{doublePress:30},{custom:Func("ru_A")})
 
-  *l::ru_remap4("o","{U+043E}","{U+041E}",3) ; {U+043E} {U+041E}
+  *l::
+  *l UP::dual.combine("Ctrl","",{doublePress:30},{custom:Func("ru_O")})
 
   *;::ru_remap4("r","{U+0440}","{U+0420}",4) ; р {U+0440} ; Р {U+0420}
 
@@ -353,8 +351,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   ; ;-------------------------
 
-  *RShift::
-  *RShift UP::ru_single_quote_accent()
+  *RShift::ru_remap4("j","{U+0436}","{U+0416}","*") ; ж {U+0436} ; Ж {U+0416}
 
    ; ;------------------------
 
