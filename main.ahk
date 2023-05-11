@@ -110,13 +110,15 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *F8::
   *F8 UP::tilda_accent()
 
-  *left::dual.comboKey("F13")
+  ; *left::dual.comboKey("F12")
+
+  *left::dual.comboKey("j")
 
   *right::dual.comboKey("q",{RShift:["{RShift UP}","+","{RShift DOWN}"]})
 
   ; ;-------------------------
 
-  *y::dual.comboKey("F12")
+  ; *y::dual.comboKey("F12")
 
   *u::dual.comboKey("home")
   *i::dual.comboKey("left")
@@ -148,12 +150,12 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *.::fr_remap2("y",8)
 
-  */::fr_remap2("w",9)
+  */::fr_remap2(",",9)
 
 
   ; ;-------------------------
 
-  *RShift::dual.comboKey("j",{RShift:"*"})
+  *RShift::fr_remap2("w","*")
 
    ; ;------------------------
 
@@ -199,7 +201,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
    ; RIGHT THUMB CLUSTER
 
   *RCtrl::
-  *RCtrl Up::dual.combine("Ctrl",",",{doublePress:70})
+  *RCtrl Up::dual.combine("Ctrl","{Esc}",{doublePress:70})
 
   *Enter::
   *Enter UP::dual.combine("LAlt","",{doublePress:70},{custom:Func("fr_E")})
