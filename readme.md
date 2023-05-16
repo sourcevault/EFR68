@@ -1,5 +1,5 @@
 
-# RULA_68
+# FRU_68
 
 `⛔️ only for Windows ⛔️`
 
@@ -11,7 +11,9 @@ Make sure to have your default english keyboard to English (United States) US.
 
 #### Features
 
-- Vim friendly by having numbers accessible in home row.
+- Vim friendly :
+   - `Esc` is located under the right thumb.
+   - Numbers accessible in home row.
 
 - Mouse friendly by having `Enter`, `Ctrl`, `Page UP` and `Page DOWN` on the left hand side.
 
@@ -28,4 +30,4 @@ Make sure to have your default english keyboard to English (United States) US.
 
 - Code released under BSD-3-Clause.
 - Documentation and images released under CC BY-NC-ND 4.0.
-- details can be found [here](https://github.com/sourcevault/EFR68/blob/dev/COPYING.txt).
+- details can be found [here](https://github.com/sourcevault/FRU68/blob/dev/COPYING.txt).
