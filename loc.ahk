@@ -275,6 +275,8 @@ ru_comma()
   ob.large := "{U+042C}" ; Ь
   ob.sym   := "{U+042C}" ; Ь
 
+  dual.combo("")
+  
   key := ru_four_symbols(ob)
 
   my_send(key)
@@ -434,11 +436,11 @@ ru_remap3(en,below,topo)
 
   if (S)
   {
-    SendInput {Blind}%topo%
+    Send {Blind}%topo%
   }
   else
   {
-    SendInput {Blind}%below%
+    Send {Blind}%below%
   }
 }
 

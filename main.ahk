@@ -114,18 +114,23 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *left::dual.comboKey("j")
 
-  *right::dual.comboKey("q",{RShift:["{RShift UP}","+","{RShift DOWN}"]})
+  *right::dual.comboKey("j",{RShift:["{RShift UP}","+","{RShift DOWN}"]})
 
   ; ;-------------------------
 
+<<<<<<< Updated upstream
   ; *y::dual.comboKey("F12")
+=======
+  *y::dual.comboKey("\",{RShift:["{RShift UP}","/","{RShift DOWN}"]})
+
+>>>>>>> Stashed changes
 
   *u::dual.comboKey("home")
   *i::dual.comboKey("left")
   *o::dual.comboKey("right")
   *p::dual.comboKey("end")
 
-  *\::dual.comboKey("\",{RShift:["{RShift UP}","/","{RShift DOWN}"]})
+  *\::dual.comboKey("q")
 
   *h::fr_H()
 
@@ -148,24 +153,33 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *,::fr_U()
 
+<<<<<<< Updated upstream
   *.::fr_remap2("y",8)
 
   */::fr_remap2(",",9)
+=======
+  *.::fr_remap2(",",8)
+>>>>>>> Stashed changes
 
+  */::fr_remap2("y",9)
 
   ; ;-------------------------
 
+<<<<<<< Updated upstream
   *RShift::fr_remap2("w","*")
+=======
+  *RShift::dual.comboKey("w",{RShift:"*"})
+>>>>>>> Stashed changes
 
    ; ;------------------------
 
   *up::switch_language_main()
 
-  *down::dual.comboKey("F13")
+  *down::dual.comboKey("F15")
 
-  *[::dual.comboKey("F14")
+  *[::dual.comboKey("F16")
 
-  *]::dual.comboKey("F15")
+  *]::dual.comboKey("F17")
 
    ; ;-------------------------
 
@@ -185,7 +199,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *LAlt::dual.comboKey("F14")
 
   *Home::
-  *Home UP::dual.combine("F20","{Esc}",{doublePress:30})
+  *Home UP::dual.combine("F20","F2",{doublePress:30})
 
     ; if (JustToggled)
     ; {
@@ -207,12 +221,14 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *Enter UP::dual.combine("LAlt","",{doublePress:70},{custom:Func("fr_E")})
 
 
-  *PgDn::dual.comboKey("F2")
-
   *PgUp::
   *PgUp UP::
     dual.combine("F20","F3",{doublePress:40})
     return
+
+
+  *PgDn::dual.comboKey("F12")
+
 
     ; if (JustToggled)
     ; {
@@ -313,18 +329,19 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *left::dual.comboKey("F13")
 
-  *right::ru_remap4("q","{U+0446}","{U+0426}","+") ; ц {U+0446}  Ц {U+0426}
+  *right::ru_remap4("j","{U+0436}","{U+0416}","+") ; ж {U+0436} ; Ж {U+0416}
 
   ; ;-------------------------
 
-  *y::dual.comboKey("F12")
+  *y::ru_blackslash()
 
   *u::dual.comboKey("home")
   *i::dual.comboKey("left")
   *o::dual.comboKey("right")
   *p::dual.comboKey("end")
 
-  *\::ru_blackslash()
+
+  *\::ru_remap3("q","{U+0446}","{U+0426}") ; ц {U+0446}  Ц {U+0426}
 
   *h::ru_H()
 
@@ -347,13 +364,11 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *,::ru_remap4("u","{U+0443}","{U+0423}",7) ; у {U+0443} ; У {U+0423}
 
-  *.::ru_remap4("y","{U+044F}","{U+042F}",8) ; я {U+044F} ; Я {U+042F}
+  *.:: ru_comma()
+  
+  */::ru_remap4("y","{U+044F}","{U+042F}",8) ; я {U+044F} ; Я {U+042F}
 
-  */::ru_remap4("w","{U+0448}","{U+0428}",9) ; ш {U+0448} ; Ш {U+0428}
-
-  ; ;-------------------------
-
-  *RShift::ru_remap4("j","{U+0436}","{U+0416}","*") ; ж {U+0436} ; Ж {U+0416}
+  *RShift::ru_remap4("w","{U+0448}","{U+0428}",9) ; ш {U+0448} ; Ш {U+0428}
 
    ; ;------------------------
 
@@ -383,17 +398,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *LAlt::dual.comboKey("F14")
 
   *Home::
-  *Home UP::
-
-    if (JustToggled)
-    {
-      JustToggled := false
-      SendInput {F20 up}
-    }
-    else
-    {
-      dual.combine("F20","{Esc}",{doublePress:250})
-    }
+  *Home UP::dual.combine("F20","F2",{doublePress:250})
 
     return
 
@@ -402,7 +407,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
    ; RIGHT THUMB CLUSTER
 
   *RCtrl::
-  *RCtrl Up::dual.combine("Ctrl",",",{doublePress:30},{custom:Func("ru_comma")})
+  *RCtrl Up::dual.combine("Ctrl","{Esc}",{doublePress:30})
 
   *Enter::
   *Enter UP::dual.combine("LAlt","",{doublePress:70},{custom:Func("ru_E")})
@@ -411,19 +416,8 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *PgDn::dual.comboKey("F2")
 
   *PgUp::
-  *PgUp UP::
+  *PgUp UP::dual.combine("F20","F3",{doublePress:250},{Shift:"{U+042A}"}) ; Ъ
 
-    if (JustToggled)
-    {
-      JustToggled := false
-      SendInput {F20 up}
-    }
-    else
-    {
-      dual.combine("F20","F3",{doublePress:250},{Shift:"{U+042A}"}) ; Ъ
-    }
-
-    return
 
   *Space::
   *Space UP::dual.combine("LShift","Space")
