@@ -110,27 +110,20 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *F8::
   *F8 UP::tilda_accent()
 
-  ; *left::dual.comboKey("F12")
-
-  *left::dual.comboKey("j")
+  *left::switch_language_main()
 
   *right::dual.comboKey("j",{RShift:["{RShift UP}","+","{RShift DOWN}"]})
 
   ; ;-------------------------
 
-<<<<<<< Updated upstream
-  ; *y::dual.comboKey("F12")
-=======
   *y::dual.comboKey("\",{RShift:["{RShift UP}","/","{RShift DOWN}"]})
-
->>>>>>> Stashed changes
 
   *u::dual.comboKey("home")
   *i::dual.comboKey("left")
   *o::dual.comboKey("right")
   *p::dual.comboKey("end")
 
-  *\::dual.comboKey("q")
+  *\::dual.comboKey("F12")
 
   *h::fr_H()
 
@@ -153,27 +146,17 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *,::fr_U()
 
-<<<<<<< Updated upstream
-  *.::fr_remap2("y",8)
-
-  */::fr_remap2(",",9)
-=======
   *.::fr_remap2(",",8)
->>>>>>> Stashed changes
 
   */::fr_remap2("y",9)
 
   ; ;-------------------------
 
-<<<<<<< Updated upstream
-  *RShift::fr_remap2("w","*")
-=======
   *RShift::dual.comboKey("w",{RShift:"*"})
->>>>>>> Stashed changes
 
    ; ;------------------------
 
-  *up::switch_language_main()
+  *up::dual.comboKey("q")
 
   *down::dual.comboKey("F15")
 
@@ -196,7 +179,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
    ; ;-------------------------
 
-  *LAlt::dual.comboKey("F14")
+  *LAlt::dual.comboKey("F13")
 
   *Home::
   *Home UP::dual.combine("F20","F2",{doublePress:30})
@@ -227,7 +210,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
     return
 
 
-  *PgDn::dual.comboKey("F12")
+  *PgDn::dual.comboKey("F14")
 
 
     ; if (JustToggled)
@@ -327,7 +310,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *F8::
   *F8 UP::tilda_accent()
 
-  *left::dual.comboKey("F13")
+  *left::switch_language_main()
 
   *right::ru_remap4("j","{U+0436}","{U+0416}","+") ; ж {U+0436} ; Ж {U+0416}
 
@@ -341,7 +324,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *p::dual.comboKey("end")
 
 
-  *\::ru_remap3("q","{U+0446}","{U+0426}") ; ц {U+0446}  Ц {U+0426}
+  *\::dual.comboKey("F12")
 
   *h::ru_H()
 
@@ -364,7 +347,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *,::ru_remap4("u","{U+0443}","{U+0423}",7) ; у {U+0443} ; У {U+0423}
 
-  *.:: ru_comma()
+  *.::ru_comma()
   
   */::ru_remap4("y","{U+044F}","{U+042F}",8) ; я {U+044F} ; Я {U+042F}
 
@@ -372,13 +355,13 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
    ; ;------------------------
 
-  *up::switch_language_main()
+  *up::ru_remap3("q","{U+0446}","{U+0426}") ; ц {U+0446}  Ц {U+0426}
 
-  *down::dual.comboKey("F13")
+  *down::dual.comboKey("F15")
 
-  *[::dual.comboKey("F14")
+  *[::dual.comboKey("F16")
 
-  *]::dual.comboKey("F15")
+  *]::dual.comboKey("F17")
 
    ; ;-------------------------
 
