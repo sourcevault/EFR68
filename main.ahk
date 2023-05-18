@@ -70,7 +70,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *t::dual.comboKey("x",{RShift:"@"})
 
-  *CapsLock::dual.comboKey("b",{RShift:["{RShift UP}","[","{RShift DOWN}"]})
+  *CapsLock::dual.comboKey("{Esc}",{RShift:["{RShift UP}","[","{RShift DOWN}"]})
 
   *a::dual.comboKey("s",{RShift:["{RShift UP}","]","{RShift DOWN}"]})
 
@@ -198,17 +198,15 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
    ; RIGHT THUMB CLUSTER
 
   *RCtrl::
-  *RCtrl Up::dual.combine("Ctrl","{Esc}",{doublePress:70})
+  *RCtrl Up::dual.combine("Ctrl","b",{doublePress:70})
 
   *Enter::
   *Enter UP::dual.combine("LAlt","",{doublePress:70},{custom:Func("fr_E")})
-
 
   *PgUp::
   *PgUp UP::
     dual.combine("F20","F3",{doublePress:40})
     return
-
 
   *PgDn::dual.comboKey("F14")
 
@@ -254,7 +252,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *0::fn_row("{F10}",0)
 
-  *-::dual.comboKey("F11")
+  *-::dual.comboKey("{F11}")
 
   ; ; -----------------------
 
@@ -273,7 +271,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *t::ru_remap4("x","{U+044E}","{U+042E}","@") ; "x" "{U+044E}" ю "{U+042E}" Ю
 
-  *CapsLock::ru_remap4("b","{U+0432}","{U+0412}","{U+005B}") ; в ; В ; {U+0432} ; {U+0412}
+  *CapsLock::dual.comboKey("{Esc}",{RShift:["{RShift UP}","[","{RShift DOWN}"]})
 
   *a::ru_remap4("s","{U+0441}","{U+0421}","{U+005D}") ; с ; С
 
@@ -390,7 +388,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
    ; RIGHT THUMB CLUSTER
 
   *RCtrl::
-  *RCtrl Up::dual.combine("Ctrl","{Esc}",{doublePress:30})
+  *RCtrl Up::dual.combine("Ctrl","",{doublePress:30},{custom:Func("ru_B")})
 
   *Enter::
   *Enter UP::dual.combine("LAlt","",{doublePress:70},{custom:Func("ru_E")})

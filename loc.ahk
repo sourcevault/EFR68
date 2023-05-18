@@ -741,7 +741,6 @@ fr_U()
 
 ; ---------------------------
 
-
 ru_EE()
 {
 
@@ -757,6 +756,21 @@ ru_EE()
   return key
 
 }
+
+ru_B()
+{
+
+  ob := {}
+
+  ob.below := "{U+0432}" ; в
+  ob.topo := "{U+0412}" ; В
+  ob.en := "b"
+
+  key := ru_remap_through_custom(ob)
+
+  return key
+}
+
 
 ru_blackslash() ; grave_accent
 {
