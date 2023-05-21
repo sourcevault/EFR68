@@ -28,8 +28,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
 #if (Toggle=0) ; French Version 5
 {
-  *=::
-  *= UP::grave_accent("CapsLock",{LShift:"{U+0060}"}) ; ` {U+0060}
+  *=::dual.comboKey("CapsLock")
 
   *1::fn_row("{F1}",1)
 
@@ -70,7 +69,8 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *t::dual.comboKey("x",{RShift:"@"})
 
-  *CapsLock::dual.comboKey("{Esc}",{RShift:["{RShift UP}","[","{RShift DOWN}"]})
+  *CapsLock::
+  *CapsLock UP::grave_accent("{Esc}",{RShift:["{RShift UP}","[","{RShift DOWN}"],LShift:"{U+0060}"})
 
   *a::dual.comboKey("s",{RShift:["{RShift UP}","]","{RShift DOWN}"]})
 
@@ -92,7 +92,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *LShift::
   *LShift UP::double_quote_accent({RShift:"<",LShift:"?"})
 
-  *z::dual.comboKey("g",{RShift:">"})
+  *z::dual.comboKey("b",{RShift:">"})
 
   *x::dual.comboKey("m",{RShift:"{"})
 
@@ -146,9 +146,9 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *,::fr_U()
 
-  *.::fr_remap2(",",8)
+  *.::fr_remap2("y",8)
 
-  */::fr_remap2("y",9)
+  */::fr_remap2("g",9)
 
   ; ;-------------------------
 
@@ -198,7 +198,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
    ; RIGHT THUMB CLUSTER
 
   *RCtrl::
-  *RCtrl Up::dual.combine("Ctrl","b",{doublePress:70})
+  *RCtrl Up::dual.combine("Ctrl",",",{doublePress:70})
 
   *Enter::
   *Enter UP::dual.combine("LAlt","",{doublePress:70},{custom:Func("fr_E")})
@@ -230,7 +230,7 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 #if (Toggle=1) ; RU
 {
 
-  *=::dual.comboKey("CapsLock",{LShift:"{U+0060}",RShift:"{U+2116}"}) ; ` {U+0060}
+  *=::dual.comboKey("CapsLock",{RShift:"{U+2116}"}) ; ` {U+0060}
 
   *1::fn_row("{F1}",1)
 
@@ -269,9 +269,9 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *r::ru_remap4("v","{U+0431}","{U+0411}","$") ; б U+0431 ;Б U+0411
 
-  *t::ru_remap4("x","{U+044E}","{U+042E}","@") ; "x" "{U+044E}" ю "{U+042E}" Ю
+  *t::ru_remap4("x","{U+044E}","{U+042E}","@") ; x U+044E ;ю U+042E Ю
 
-  *CapsLock::dual.comboKey("{Esc}",{RShift:["{RShift UP}","[","{RShift DOWN}"]})
+  *CapsLock::dual.comboKey("{Esc}",{RShift:["{RShift UP}","[","{RShift DOWN}"],LShift:"{U+0060}"})
 
   *a::ru_remap4("s","{U+0441}","{U+0421}","{U+005D}") ; с ; С
 
@@ -290,9 +290,10 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *LShift::
   *LShift UP::double_quote_accent({RShift:"<",LShift:"?"})
 
-  *z::ru_remap4("g","{U+0433}","{U+0413}",">") ; г ; Г
-
-  *x::ru_remap4("m","{U+043C}","{U+041C}","{") ; м ; М
+  
+  *z::ru_remap4("b","{U+0432}","{U+0412}",">") ; в ; В
+  
+  *x::ru_remap4("m","{U+043C}","{U+0412}","{") ; м ; М
 
   *c::ru_remap4("l","{U+043B}","{U+041B}","}") ; л ; Л
 
@@ -345,11 +346,11 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
 
   *,::ru_remap4("u","{U+0443}","{U+0423}",7) ; у {U+0443} ; У {U+0423}
 
-  *.::ru_comma()
-  
-  */::ru_remap4("y","{U+044F}","{U+042F}",8) ; я {U+044F} ; Я {U+042F}
+  *.::ru_remap4("y","{U+044F}","{U+042F}",8) ; я {U+044F} ; Я {U+042F}
 
-  *RShift::ru_remap4("w","{U+0448}","{U+0428}",9) ; ш {U+0448} ; Ш {U+0428}
+  */::ru_remap4("g","{U+0433}","{U+0413}",9) ; г {U+0433} ; Г {U+0413}
+
+  *RShift::ru_remap4("w","{U+0448}","{U+0428}","*") ; ш {U+0448} ; Ш {U+0428}
 
    ; ;------------------------
 
@@ -386,9 +387,9 @@ dual := new Dual({delay: 70, timeout: 300, doublePress: 200, specificDelays: fal
   *End::dual.comboKey("Delete")
 
    ; RIGHT THUMB CLUSTER
-
+  
   *RCtrl::
-  *RCtrl Up::dual.combine("Ctrl","",{doublePress:30},{custom:Func("ru_B")})
+  *RCtrl Up::dual.combine("Ctrl","",{doublePress:30},{custom:Func("ru_comma")})
 
   *Enter::
   *Enter UP::dual.combine("LAlt","",{doublePress:70},{custom:Func("ru_E")})

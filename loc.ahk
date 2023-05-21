@@ -125,21 +125,6 @@ ru_remap_through_custom(ob)
   }
 }
 
-ru_T()
-{
-
-  ob := {}
-
-  ob.topo  := "{U+0422}" ;Т
-  ob.below := "{U+0442}" ;т
-  ob.en    := "t"
-
-  key := ru_remap_through_custom(ob)
-
-  return key
-}
-
-
 ru_I()
 {
   ob := {}
@@ -265,7 +250,6 @@ ru_four_symbols(ob)
 }
 
 
-
 ru_comma()
 {
   ob := {}
@@ -276,10 +260,10 @@ ru_comma()
   ob.sym   := "{U+042C}" ; Ь
 
   dual.combo("")
-  
+
   key := ru_four_symbols(ob)
 
-  my_send(key)
+  return key
 }
 
 ru_underscore()
@@ -347,7 +331,6 @@ ru_A()
 {
 
   ob := {}
-
   ob.below := "{U+0430}" ; а {U+0430}
   ob.topo := "{U+0410}" ; А {U+0410}
   ob.en := "a"
@@ -385,12 +368,12 @@ fr_remap2(en,num)
 
     tos := "{RShift UP}{" . num . "}{RShift DOWN}"
 
-    SendInput %tos%
+    Send %tos%
 
   }
   else
   {
-    SendInput {Blind}%en%
+    Send {Blind}%en%
   }
 }
 
@@ -740,6 +723,7 @@ fr_U()
 }
 
 ; ---------------------------
+
 
 ru_EE()
 {
